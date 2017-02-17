@@ -1,0 +1,80 @@
+<!--pages/video-detail/video-detail.wxml-->
+<video src="{{ video_data.linkurl }}" class="video-detail" id="videoDetail" bindpause="pauseHandler" bindplay="playHandler"></video>
+<!--<view class="video-wrapper"></view>-->
+<image src="{{ collect.src }}" class="collect-gif {{ collect.show ? 'block-show' : 'block-hidden'}}"></image>
+<view class="video-info">
+    <view class="main-info">
+        <view class="author-info">
+            <image src="{{ video_data.avatar }}"></image>
+            <view>
+                <view class="video-author">{{ video_data.nickname }}</view>
+                <view class="video-time">37分钟前</view>
+            </view>
+        </view>
+        <view class="collect-info">
+            <image wx:if="{{ video_data.ispraise == 0 }}" src="{{ like_src }}" class="like-image"></image>
+            <image wx:else src="{{ liked_src }}" class="like-image"></image>
+            <view class="liked-count">{{ video_data.praisecount }}</view>
+        </view>
+    </view>
+    <view class="share-info">
+        <view class="share-wrapper">
+            <view class="share-tri"></view>
+            <view class="share-text">
+                <text>分享按钮展开了，好的视频大家一起看分享按钮展开了，好的视频大家</text>
+                <view class="video-tt">#这首歌有毒#</view>
+            </view>
+        </view>
+    </view>
+    <view class="sound-info">
+        <block wx:if="{{ video_data.videoid == 999 }}">
+            <navigator url="/pages/sound-detail/sound-detail?musicid={{ video_data.voiceid }}" class="sound-link">
+                <image src="{{ sound_src }}"></image>
+                <view class="sound-title">{{ video_data.title }}</view>
+            </navigator>
+            <view class="visitor-count">{{ video_data.topiccount }}人参与</view>
+        </block>
+        <block wx:else>
+            <navigator url="/pages/sound-detail/sound-detail?musicid={{ video_data.voiceid }}" class="sound-link">
+                <image src="{{ sound_src }}"></image>
+                <view class="sound-title">{{ video_data.title }}</view>
+            </navigator>
+            <view class="visitor-count">{{ video_data.topiccount }}人参与</view>
+        </block>
+    </view>
+    <view class="comments-info">
+        <view class="comments-title">
+            <image src="{{ comment_src }}"></image>
+            <view class="comments-count">{{ comments_data.total }}评论</view>
+        </view>
+        <view class="comments-bar" wx:if="{{ comments_data.hot_comments.length > 0 }}">
+            <view class="comments-line"></view>
+            <view>最热</view>
+            <view class="comments-line"></view>
+        </view>
+        <view class="comments-item" wx:for="{{ comments_data.hot_comments }}" wx:key="a">
+            <image src="{{ item.avatar }}" class="comments-avar"></image>
+            <view class="comments-detail">
+                <view class="comments-username">{{ item.nickname }}</view>
+                <view class="comments-time">20分钟前</view>
+                <view class="comments-content">{{ item.content }}</view>
+            </view>
+            <view class="comments-liked">
+                <image src="{{ comment_link_src }}"></image>
+                <view>{{ item.praises }}</view>
+            </view>
+        </view>
+        <view class="comments-item" wx:for="{{ comments_data.comments }}" wx:key="b">
+            <image src="{{ item.avatar }}" class="comments-avar"></image>
+            <view class="comments-detail">
+                <view class="comments-username">{{ item.nickname }}</view>
+                <view class="comments-time">20分钟前</view>
+                <view class="comments-content">{{ item.content }}</view>
+            </view>
+            <view class="comments-liked">
+                <image src="{{ comment_link_src }}"></image>
+                <view>{{ item.praises }}</view>
+            </view>
+        </view>
+    </view>
+</view>

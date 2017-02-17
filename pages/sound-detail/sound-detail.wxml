@@ -1,0 +1,41 @@
+<!--pages/sound-detail/sound-detail.wxml-->
+<view class="sound-detail">
+    <image src="{{ sound_data.cover }}" mode="top center"></image>
+    <audio src="{{ sound_data.audio }}" id="soundDetail"></audio>
+    <view class="cover-bg"></view>
+    <view class="sound-container">
+        <view class="sound-wrapper">
+            <image class="sound-avar sound-cover-rotate {{ !sound_paused ? 'rotate-running' : 'rotate-paused' }}" src="{{ sound_data.cover }}"></image>
+            <image wx:if="{{ sound_paused }}" class="sound-control" src="{{ sound_pause_src }}" bindtap="soundControlHandler"></image>
+            <image wx:else class="sound-control" src="{{ sound_play_src }}" bindtap="soundControlHandler"></image>
+        </view>
+        <view class="sound-time">时长：00:28</view>
+        <view class="sound-data">233.1万 作品 <text class="text-gray">|</text> 233.1万 收藏</view>
+        <view class="sound-players">
+            <view class="sound-player-tip">演员：</view>
+            <view class="sound-player-list">
+                <view class="sound-player-item" wx:key="a" wx:for="{{ sound_data.actors }}">{{ item.name }}</view>
+            </view>
+        </view>
+    </view>
+</view>
+<view class="media_list">
+    <navigator url="" wx:for="{{ imgList }}" class="media_item">
+        <view  class="img_wrap">
+            <image wx:if="{{ item.loaded }}" src="{{ item.url }}" class="fade_in" mode="top center" />
+        </view>
+        <view class="media_info">
+            <view class="media_userinfo">
+                <view class="user_avar">
+                    <image src="{{ avar }}"></image>
+                </view>
+                <view class="user_name">一杯黄土</view>
+            </view>
+            <view class="media_title">俏皮可爱小公举俏皮可</view>
+        </view>
+    </navigator>
+</view>
+
+<!-- 引入图片预加载组件 -->
+<import src="../../img-loader/img-loader.wxml"/>
+<template is="img-loader" data="{{ imgLoadList }}"></template>

@@ -1,0 +1,15 @@
+{
+  "pages":[
+    "pages/hots/hots",
+    "pages/sounds/sounds",
+    "pages/sound-detail/sound-detail",
+    "pages/video-detail/video-detail"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#2c2d31",
+    "navigationBarTitleText": "小咖秀lite",
+    "navigationBarTextStyle":"#fff",
+    "enablePullDownRefresh": true
+  }
+}

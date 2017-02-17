@@ -1,0 +1,21 @@
+<!--index.wxml-->
+<view class="media_list">
+    <navigator wx:for="{{ hots_data.list }}" class="media_item" wx:key="a" url="/pages/video-detail/video-detail?id={{ item.videoid }}">
+        <view class="img_wrap">
+            <image wx:if="{{ img_list[index].loaded }}" src="{{ img_list[index].url }}" class="fade_in" mode="top center" />
+        </view>
+        <view class="media_info">
+            <view class="media_userinfo">
+                <view class="user_avar">
+                    <image src="{{ item.avatar }}"></image>
+                </view>
+                <view class="user_name">{{ item.nickname }}</view>
+            </view>
+            <view class="media_title">{{ item.title }}</view>
+        </view>
+    </navigator>
+</view>
+
+<!-- 引入图片预加载组件 -->
+<import src="../../img-loader/img-loader.wxml"/>
+<template is="img-loader" data="{{ imgLoadList }}"></template>
