@@ -121,6 +121,8 @@ Page({
   },
   onHide:function(){
     // 页面隐藏
+    var that = this;
+    that.data.video_context.pause();
   },
   onUnload:function(){
     // 页面关闭
@@ -205,6 +207,36 @@ Page({
         }
       }
     }, 500);
+  },
+  collectHandler: function(e){
+    var that = this;
+    var data = {
+      videoid: that.data.video_data.videoid
+    }
+    if(that.data.video_data.ispraise){
+      app.post_request(app.globalData.API_LIST.TEST.cancel_praise_video, data, that.collectSuccess);
+    }else{
+      app.post_request(app.globalData.API_LIST.TEST.praise_video, data, that.collectSuccess);
+    }
+  },
+  collectSuccess: function(res){
+    var that = this;
+    console.log(res);
+    if(res.data.code == 200){
+      if(that.data.video_data.ispraise){
+        that.setData({
+          'video_data.ispraise': 0,
+          'video_data.praisecount': that.data.video_data.praisecount-1
+        });
+      }else{
+        that.setData({
+          'video_data.ispraise': 1,
+          'video_data.praisecount': that.data.video_data.praisecount+1
+        });
+      }
+    }else{
+      
+    }
   },
   sigTapHandler: function(){
     var that = this;

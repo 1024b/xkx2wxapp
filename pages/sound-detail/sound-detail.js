@@ -150,5 +150,12 @@ Page({
   soundRunning: function(){
     var that = this;
     that.data.sound_context.play();
+  },
+  endHandler: function(e){
+    var that = this;
+    console.log('e');
+    that.setData({
+      sound_paused: true
+    });
   }
 })

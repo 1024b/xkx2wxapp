@@ -40,7 +40,25 @@ Page({
   onLoad() {
     //初始化图片预加载组件，并指定统一的加载完成回调
     var that = this;
-    that.initData();
+    wx.getStorage({
+      key: 'session_id',
+      success: function(res){
+        // success
+        if(res.data){
+          app.globalData.userData.sessionId = res.data;
+          that.initData();
+        }else{
+         app.initSession(that.initData);
+        }
+      },
+      fail: function() {
+        // fail
+        app.initSession(that.initData);
+      },
+      complete: function() {
+        // complete
+      }
+    })
   },
   loadImages() {
     //同时发起全部图片的加载

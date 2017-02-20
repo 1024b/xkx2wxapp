@@ -11,7 +11,7 @@
                 <view class="video-time">37分钟前</view>
             </view>
         </view>
-        <view class="collect-info">
+        <view class="collect-info" bindtap="collectHandler">
             <image wx:if="{{ video_data.ispraise == 0 }}" src="{{ like_src }}" class="like-image"></image>
             <image wx:else src="{{ liked_src }}" class="like-image"></image>
             <view class="liked-count">{{ video_data.praisecount }}</view>
@@ -27,11 +27,11 @@
         </view>
     </view>
     <view class="sound-info">
-        <block wx:if="{{ video_data.videoid == 999 }}">
-            <navigator url="/pages/sound-detail/sound-detail?musicid={{ video_data.voiceid }}" class="sound-link">
+        <block wx:if="{{ video_data.voiceid == 999 }}">
+            <view class="sound-link">
                 <image src="{{ sound_src }}"></image>
-                <view class="sound-title">{{ video_data.title }}</view>
-            </navigator>
+                <view class="sound-title">无音频</view>
+            </view>
             <view class="visitor-count">{{ video_data.topiccount }}人参与</view>
         </block>
         <block wx:else>

@@ -2,24 +2,6 @@
 App({
   onLaunch: function () {
     var that = this;
-    wx.getStorage({
-      key: 'session_id',
-      success: function(res){
-        // success
-        if(res.data){
-          
-        }else{
-         that.getUserInfo(that.initSession);
-        }
-      },
-      fail: function() {
-        // fail
-        that.getUserInfo(that.initSession);
-      },
-      complete: function() {
-        // complete
-      }
-    })
   },
   getUserInfo:function(cb){
     var that = this
@@ -40,39 +22,64 @@ App({
       })
     }
   },
-  initSession: function(userData){
+  initSession: function(nextAction){
     var that = this;
-    var data = {
-      code: userData.code,
-      iv: userData.userInfo.iv,
-      encryptedData: userData.userInfo.encryptedData
-    }
-    that.post_request(that.globalData.API_LIST.TEST.init_session, data, that.initSuccess);
-  },
-  initSuccess: function(res){
-    var that = this;
-    console.log(that.globalData.userData);
-    if(res.code == 200){
-      wx.setStorage({
-        key: 'session_id',
-        data: res.data.session_id,
-        success: function(res){
-          // success
-          
-        },
-        fail: function() {
-          // fail
-        },
-        complete: function() {
-          // complete
-        }
-      })
-    }else{
+    wx.login({
+      success: function (res) {
+        console.log(that);
+        that.globalData.userData.code = res.code;
+        wx.getUserInfo({
+          success: function (res) {
+            that.globalData.userData.userInfo = res
+            var data = {
+              code: that.globalData.userData.code,
+              iv: that.globalData.userData.userInfo.iv,
+              encryptedData: that.globalData.userData.userInfo.encryptedData
+            }
+            wx.request({
+              url: that.globalData.API_LIST.TEST.init_session,
+              data: data,
+              method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+              header: {
+                'content-type': 'application/x-www-form-urlencoded'
+              },
+              success: function(res){
+                // success
+                if(res.data.code == 200){
+                  that.globalData.userData.sessionId = res.data.data.session_id;
+                  wx.setStorage({
+                    key: 'session_id',
+                    data: res.data.data.session_id,
+                    success: function(res){
+                      // success
+                      typeof nextAction == "function" && nextAction()
+                    },
+                    fail: function() {
+                      // fail
+                    },
+                    complete: function() {
+                      // complete
+                    }
+                  })
+                }else{
 
-    }
+                }
+              },
+              fail: function() {
+                // fail
+              },
+              complete: function() {
+                // complete
+              }
+            })
+          }
+        })
+      }
+    })
   },
   globalData:{
     userData: {
+      sessionId: '',
       code: '',
       userInfo: null
     },
@@ -83,11 +90,16 @@ App({
         video_comments: 'https://testapi.xiaokaxiu.com/www/wx/get_video_comments',
         sound_detail: 'https://testapi.xiaokaxiu.com/www/wx/get_music',
         sound_video_list: 'https://testapi.xiaokaxiu.com/www/wx/get_music_videos',
-        init_session: 'https://testapi.xiaokaxiu.com/www/wx/login'
+        init_session: 'https://testapi.xiaokaxiu.com/www/wx/login',
+        praise_video: 'https://testapi.xiaokaxiu.com/www/wx/praise_video',
+        cancel_praise_video: 'https://testapi.xiaokaxiu.com/www/wx/cancel_praise_video'
       }
     }
   },
   post_request: function(url, data, success, fail, complete){
+    var that = this;
+    var request_data = data;
+    request_data.session_id = that.globalData.userData.sessionId;
     wx.request({
       url: url,
       data: data,
@@ -105,7 +117,8 @@ App({
       },
       complete: function() {
         // complete
-        //complete();
+        wx.stopPullDownRefresh();
+        wx.hideToast();
       }
     })
   }
