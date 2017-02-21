@@ -78,11 +78,11 @@ Page({
   },
   onReachBottom: function(){
     var that = this;
-    wx.showToast({
+    /*wx.showToast({
       title: '加载中...',
       icon: 'loading',
       duration: 2000
-    });
+    });*/
     that.loadMore();
   },
   onPullDownRefresh: function(){

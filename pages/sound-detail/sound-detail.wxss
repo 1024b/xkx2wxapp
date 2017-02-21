@@ -99,6 +99,10 @@
 }
 .sound-avar{
   border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9999;
 }
 .sound-control{
   width: 70rpx;
@@ -158,14 +162,12 @@
 	animation-timing-function:linear;
 	animation-iteration-count:infinite;
 	animation-direction:normal;
-	animation-play-state:paused;
 	/* Safari and Chrome: */
 	-webkit-animation-name:myRotate;
 	-webkit-animation-duration:5s;
 	-webkit-animation-timing-function:linear;
 	-webkit-animation-iteration-count:infinite;
 	-webkit-animation-direction:normal;
-	-webkit-animation-play-state:paused;
 }
 .rotate-running{
   animation-play-state:running;

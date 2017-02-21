@@ -5,12 +5,13 @@
     <view class="cover-bg"></view>
     <view class="sound-container">
         <view class="sound-wrapper">
-            <image class="sound-avar sound-cover-rotate {{ !sound_paused ? 'rotate-running' : 'rotate-paused' }}" src="{{ sound_data.cover }}"></image>
-            <image wx:if="{{ sound_paused }}" class="sound-control" src="{{ sound_pause_src }}" bindtap="soundControlHandler"></image>
-            <image wx:else class="sound-control" src="{{ sound_play_src }}" bindtap="soundControlHandler"></image>
+            <image animation="{{ animation_data }}" class="sound-avar" src="{{ sound_data.cover }}"></image>
+            <!--css3手机端有很多bug-->
+            <!--<image class="sound-avar sound-cover-rotate {{ !sound_paused ? 'rotate-running' : 'rotate-paused' }}" src="{{ sound_data.cover }}"></image>-->
+            <image src="{{ sound_paused ? sound_pause_src : sound_play_src }}" class="sound-control" bindtap="soundControlHandler"></image>
         </view>
-        <view class="sound-time">时长：00:28</view>
-        <view class="sound-data">233.1万 作品 <text class="text-gray">|</text> 233.1万 收藏</view>
+        <view class="sound-time">时长：{{ sound_data.duration }}</view>
+        <view class="sound-data">{{ sound_data.dig }} 作品 <text class="text-gray">|</text> {{ sound_data.opusnum }} 收藏</view>
         <view class="sound-players">
             <view class="sound-player-tip">演员：</view>
             <view class="sound-player-list">
@@ -20,18 +21,18 @@
     </view>
 </view>
 <view class="media_list">
-    <navigator url="" wx:for="{{ imgList }}" class="media_item">
-        <view  class="img_wrap">
-            <image wx:if="{{ item.loaded }}" src="{{ item.url }}" class="fade_in" mode="top center" />
+    <navigator wx:for="{{video_data.videos }}" class="media_item" wx:key="a" url="/pages/video-detail/video-detail?id={{ item.videoid }}">
+        <view class="img_wrap">
+            <image wx:if="{{ img_list[index].loaded }}" src="{{ img_list[index].url }}" class="fade_in" mode="top center" />
         </view>
         <view class="media_info">
             <view class="media_userinfo">
                 <view class="user_avar">
-                    <image src="{{ avar }}"></image>
+                    <image src="{{ item.avatar }}"></image>
                 </view>
-                <view class="user_name">一杯黄土</view>
+                <view class="user_name">{{ item.nickname }}</view>
             </view>
-            <view class="media_title">俏皮可爱小公举俏皮可</view>
+            <view class="media_title">{{ item.title }}</view>
         </view>
     </navigator>
 </view>

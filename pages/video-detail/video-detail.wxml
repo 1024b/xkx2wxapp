@@ -8,7 +8,7 @@
             <image src="{{ video_data.avatar }}"></image>
             <view>
                 <view class="video-author">{{ video_data.nickname }}</view>
-                <view class="video-time">37分钟前</view>
+                <view class="video-time">{{ video_data.createtime }}</view>
             </view>
         </view>
         <view class="collect-info" bindtap="collectHandler">
@@ -17,15 +17,17 @@
             <view class="liked-count">{{ video_data.praisecount }}</view>
         </view>
     </view>
+    <block wx:if="{{ video_data.desc || video_data.topic_list.length>0 }}">
     <view class="share-info">
         <view class="share-wrapper">
             <view class="share-tri"></view>
             <view class="share-text">
-                <text>分享按钮展开了，好的视频大家一起看分享按钮展开了，好的视频大家</text>
-                <view class="video-tt">#这首歌有毒#</view>
+                <text>{{ video_data.desc }}</text>
+                <view class="video-tt" wx:for="{{ video_data.topic_list }}" wx:key="c">#{{ item }}#</view>
             </view>
         </view>
     </view>
+    </block>
     <view class="sound-info">
         <block wx:if="{{ video_data.voiceid == 999 }}">
             <view class="sound-link">
@@ -71,7 +73,7 @@
                 <view class="comments-time">20分钟前</view>
                 <view class="comments-content">{{ item.content }}</view>
             </view>
-            <view class="comments-liked">
+            <view class="comments-liked" data-commentid="{{ item.id }}" bindtap="praiseHandler">
                 <image src="{{ comment_link_src }}"></image>
                 <view>{{ item.praises }}</view>
             </view>

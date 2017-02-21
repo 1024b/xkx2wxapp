@@ -48,6 +48,7 @@ Page({
       "mtypename":"普通",
       "integral":0,
       "sex":0,
+      "topic_list": [],
       "ispraise":0, // 登录用户是否赞过该视频
       "musictitle":"" // 音乐ID
     },
@@ -127,6 +128,40 @@ Page({
   onUnload:function(){
     // 页面关闭
   },
+  dealTime: function(){
+    var that = this;
+    var cur_time = parseInt(new Date().getTime()/1000);
+    var diff_time = cur_time-parseInt(that.data.video_data.createtime);
+    var day = parseInt(Math.floor(diff_time / 1440));
+    var hour = day >0 ? Math.floor((diff_time - day*1440)/60) : Math.floor(diff_time/60); 
+    var minute = hour > 0 ? Math.floor(diff_time -day*1440 - hour*60) : diff_time;
+    if(day > 0){
+      if(day>=30){
+        that.setData({
+          'video_data.createtime': new Date(parseInt(that.data.video_data.createtime)*1000).getFullYear()+"-"+new Date(parseInt(that.data.video_data.createtime)*1000).getMonth()+"-"+new Date(parseInt(that.data.video_data.createtime)*1000).getDate()
+        });
+      }else{
+        that.setData({
+          'video_data.createtime': day+'天前'
+        }); 
+      }
+    }else if(hour >= 0){
+      that.setData({
+        'video_data.createtime': hour+'小时前'
+      });
+    }else{
+      if(minute>0){
+        that.setData({
+          'video_data.createtime': minute+'分钟前'
+        });
+      }else{
+        that.setData({
+          'video_data.createtime': '刚刚'
+        });
+      }
+    }
+    console.log(day+'-'+hour+'-'+minute);
+  },
   pauseHandler: function(){
     var that = this;
     that.data.video_paused = true;
@@ -154,6 +189,7 @@ Page({
       that.setData({
         video_data: res.data.data
       });
+      that.dealTime();
     }else{
       
     }

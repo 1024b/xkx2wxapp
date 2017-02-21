@@ -118,7 +118,7 @@ App({
       complete: function() {
         // complete
         wx.stopPullDownRefresh();
-        wx.hideToast();
+        //wx.hideToast();
       }
     })
   }

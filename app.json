@@ -6,10 +6,9 @@
     "pages/video-detail/video-detail"
   ],
   "window":{
-    "backgroundTextStyle":"light",
+    "backgroundTextStyle":"dark",
     "navigationBarBackgroundColor": "#2c2d31",
     "navigationBarTitleText": "小咖秀lite",
-    "navigationBarTextStyle":"#fff",
-    "enablePullDownRefresh": true
+    "navigationBarTextStyle":"#fff"
   }
 }
