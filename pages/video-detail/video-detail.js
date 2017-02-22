@@ -197,8 +197,12 @@ Page({
   initCommentsSuccess: function(res){
     var that = this;
     if(res.data.code == 200){
+      var tmp_arr = res.data.data;
+      for(let i=0;i<tmp_arr.comments;i++){
+        tmp_arr.comments[i].ispoked = false
+      }
       that.setData({
-        comments_data: res.data.data
+        comments_data: tmp_arr
       });
     }else{
 
