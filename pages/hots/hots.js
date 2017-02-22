@@ -25,17 +25,7 @@ Page({
   data: {
     img_list: [],
     avar: '../../assets/morentouxiang@2x.png',
-    hots_data: {
-      "current_page":1,
-      "limit":30,
-      "count":29,    // 返回实际条数
-      "total":13875, // 总条数
-      "list":[
-        {
-          
-        }
-      ]
-    }
+    hots_data: null
   },
   onLoad() {
     //初始化图片预加载组件，并指定统一的加载完成回调
@@ -91,7 +81,13 @@ Page({
   },
   initData: function(){
     var that = this;
-    app.post_request(app.globalData.API_LIST.TEST.video_list, {page: 1, limit: 10}, that.initDataSuccess);
+    var data = {
+      page: 1,
+      limit: 10,
+      refresh: 1,
+      first_vid: ''
+    }
+    app.post_request(app.globalData.API_LIST.TEST.video_list, data, that.initDataSuccess);
   },
   initDataSuccess: function(res){
     var that = this;
@@ -121,7 +117,9 @@ Page({
     var that = this;
     var data = {
       page: that.data.hots_data.current_page+1,
-      limit: 10
+      limit: 10,
+      refresh: 0,
+      first_vid: that.data.hots_data.first_vid
     }
     app.post_request(app.globalData.API_LIST.TEST.video_list, data, that.loadMoreSuccess);
   },

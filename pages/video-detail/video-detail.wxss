@@ -143,6 +143,9 @@
     padding: 30rpx 30rpx 20rpx 30rpx;
     display: flex;
 }
+.comments-item:last-child{
+    border-bottom: 0;
+}
 .comments-avar{
     width: 72rpx;
     height: 72rpx;

@@ -1,5 +1,5 @@
 <!--pages/sound-detail/sound-detail.wxml-->
-<view class="sound-detail">
+<view class="sound-detail" wx:if="{{ sound_data }}">
     <image src="{{ sound_data.cover }}" mode="top center"></image>
     <audio src="{{ sound_data.audio }}" id="soundDetail" bindended="endHandler"></audio>
     <view class="cover-bg"></view>
@@ -20,7 +20,27 @@
         </view>
     </view>
 </view>
-<view class="media_list">
+<view class="sound-detail" wx:else>
+    <image src="" mode="top center"></image>
+    <view class="cover-bg"></view>
+    <view class="sound-container">
+        <view class="sound-wrapper">
+            <image class="sound-avar" src="{{ sound_data.cover }}"></image>
+            <!--css3手机端有很多bug-->
+            <!--<image class="sound-avar sound-cover-rotate {{ !sound_paused ? 'rotate-running' : 'rotate-paused' }}" src="{{ sound_data.cover }}"></image>-->
+            <image src="{{ sound_paused ? sound_pause_src : sound_play_src }}" class="sound-control" bindtap="soundControlHandler"></image>
+        </view>
+        <view class="sound-time">时长：暂无数据</view>
+        <view class="sound-data">0 作品 <text class="text-gray">|</text> 0 收藏</view>
+        <view class="sound-players">
+            <view class="sound-player-tip">演员：</view>
+            <view class="sound-player-list">
+                <view class="sound-player-item">暂无数据</view>
+            </view>
+        </view>
+    </view>
+</view>
+<view class="media_list" wx:if="{{ video_data }}">
     <navigator wx:for="{{video_data.videos }}" class="media_item" wx:key="a" url="/pages/video-detail/video-detail?id={{ item.videoid }}">
         <view class="img_wrap">
             <image wx:if="{{ img_list[index].loaded }}" src="{{ img_list[index].url }}" class="fade_in" mode="top center" />
@@ -35,8 +55,11 @@
             <view class="media_title">{{ item.title }}</view>
         </view>
     </navigator>
+    <view class="loading-more">加载中...</view>
 </view>
-
+<view class="loading-img" wx:else>
+    <image src="../../assets/loading.png"></image>
+</view>
 <!-- 引入图片预加载组件 -->
 <import src="../../img-loader/img-loader.wxml"/>
 <template is="img-loader" data="{{ imgLoadList }}"></template>

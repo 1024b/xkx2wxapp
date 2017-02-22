@@ -92,7 +92,8 @@ App({
         sound_video_list: 'https://testapi.xiaokaxiu.com/www/wx/get_music_videos',
         init_session: 'https://testapi.xiaokaxiu.com/www/wx/login',
         praise_video: 'https://testapi.xiaokaxiu.com/www/wx/praise_video',
-        cancel_praise_video: 'https://testapi.xiaokaxiu.com/www/wx/cancel_praise_video'
+        cancel_praise_video: 'https://testapi.xiaokaxiu.com/www/wx/cancel_praise_video',
+        praise_comment: 'https://testapi.xiaokaxiu.com/www/wx/praise_comment'
       }
     }
   },

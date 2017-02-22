@@ -19,94 +19,10 @@ Page({
     liked_src: '../../assets/like-red@2x.png',
     sound_src: '../../assets/sounds-icon@2x.png',
     comment_src: '../../assets/comment@2x.png',
-    comment_link_src: '../../assets/like@2x.png',
-    video_data: {
-      "videoid":"13201381",
-      "scid":"jzx0DKta1LtnJcPYpOZPqA__",
-      "title":"原创视频",
-      "memberid":"10003754",
-      "cover":"https://gslb.miaopai.com/stream/jzx0DKta1LtnJcPYpOZPqA___m.jpg",
-      "linkurl":"https://gslb.miaopai.com/stream/jzx0DKta1LtnJcPYpOZPqA__.mp4",
-      "voiceid":999, // 音乐ID，999表示是原创视频，没有音乐
-      "hits":0, // 视频浏览数
-      "topiccount":3,  // 视频评论数
-      "praisecount":25, // 视频被赞数
-      "status":"1",
-      "lon":"0",
-      "lat":"0",
-      "type":4,
-      "desc":null,
-      "updatetime":"1486461470",
-      "createip":"168434004",
-      "createtime":"1486461470",
-      "upkey":21,
-      "sign":"f3bbc4a9b91051b28469dfc255b7bb64",
-      "expiration_time":1486979451000,
-      "nickname":"小丁测试",
-      "avatar":"https://alcdn.img.xiaoka.tv/20170105/d8c/e3c/0/d8ce3c7fae8b2b41f45ae11090e9448e.jpg",
-      "mtype":0,
-      "mtypename":"普通",
-      "integral":0,
-      "sex":0,
-      "topic_list": [],
-      "ispraise":0, // 登录用户是否赞过该视频
-      "musictitle":"" // 音乐ID
-    },
-    comments_data: {
-      "current_page":1,
-      "limit":30,
-      "count":3,
-      "total":3,
-
-      // 热门评论列表
-      "hot_comments":[        ],
-      // 最新评论列表
-      "comments":[
-          {
-              "id":"1071017",
-              "videoid":"13201381",
-              "memberid":"10003754",
-              "ts":"100",
-              "content":"[微笑][微笑] ", // 评论内容
-              "createtime":"1486951990", // 评论时间
-              "praises":"0", // 评论赞数
-              "nickname":"小丁测试", // 评论人昵称
-              "avatar":"https://alcdn.img.xiaoka.tv/20170105/d8c/e3c/0/d8ce3c7fae8b2b41f45ae11090e9448e.jpg",
-              "mtype":0, // 用户类型 0普通用户 1达人 2明星
-              "mtypename":"普通",
-              "integral":0
-          },
-          {
-              "id":"1071016",
-              "videoid":"13201381",
-              "memberid":"10003754",
-              "ts":"100",
-              "content":"[哈哈][哈哈] ",
-              "createtime":"1486951821",
-              "praises":"0",
-              "nickname":"小丁测试",
-              "avatar":"https://alcdn.img.xiaoka.tv/20170105/d8c/e3c/0/d8ce3c7fae8b2b41f45ae11090e9448e.jpg",
-              "mtype":0,
-              "mtypename":"普通",
-              "integral":0
-          },
-          {
-              "id":"1071015",
-              "videoid":"13201381",
-              "memberid":"10003754",
-              "ts":"3000",
-              "content":"[嘻嘻][嘻嘻][嘻嘻] ",
-              "createtime":"1486951775",
-              "praises":"0",
-              "nickname":"小丁测试",
-              "avatar":"https://alcdn.img.xiaoka.tv/20170105/d8c/e3c/0/d8ce3c7fae8b2b41f45ae11090e9448e.jpg",
-              "mtype":0,
-              "mtypename":"普通",
-              "integral":0
-          }
-      ],
-      "page":1
-    }
+    comment_poke_src: '../../assets/poke.png',
+    comment_poked_src: '../../assets/poked.png',
+    video_data: null,
+    comments_data: null
   },
   onLoad:function(options){
     // 页面初始化 options为页面跳转所带来的参数
@@ -128,23 +44,20 @@ Page({
   onUnload:function(){
     // 页面关闭
   },
-  dealTime: function(){
+  dealVideoTime: function(){
     var that = this;
     var cur_time = parseInt(new Date().getTime()/1000);
     var diff_time = cur_time-parseInt(that.data.video_data.createtime);
-    var day = parseInt(Math.floor(diff_time / 1440));
+    var day = parseInt(Math.floor(diff_time / (60*60*24)));
     var hour = day >0 ? Math.floor((diff_time - day*1440)/60) : Math.floor(diff_time/60); 
     var minute = hour > 0 ? Math.floor(diff_time -day*1440 - hour*60) : diff_time;
+    console.log(cur_time+'-'+that.data.video_data.createtime);
     if(day > 0){
-      if(day>=30){
-        that.setData({
-          'video_data.createtime': new Date(parseInt(that.data.video_data.createtime)*1000).getFullYear()+"-"+new Date(parseInt(that.data.video_data.createtime)*1000).getMonth()+"-"+new Date(parseInt(that.data.video_data.createtime)*1000).getDate()
-        });
-      }else{
-        that.setData({
-          'video_data.createtime': day+'天前'
-        }); 
-      }
+      var month = new Date(parseInt(that.data.video_data.createtime)*1000).getMonth()+1;
+      var date = new Date(parseInt(that.data.video_data.createtime)*1000).getDate();
+      that.setData({
+        'video_data.createtime': month+'-'+date
+      });
     }else if(hour >= 0){
       that.setData({
         'video_data.createtime': hour+'小时前'
@@ -160,7 +73,54 @@ Page({
         });
       }
     }
-    console.log(day+'-'+hour+'-'+minute);
+  },
+  dealCommentsTime: function(){
+    var that = this;
+    var cur_time = parseInt(new Date().getTime()/1000);
+    var tmp_arr = that.data.comments_data.comments;
+    for(let i = 0;i<that.data.comments_data.comments.length;i++){
+      let diff_time = cur_time-parseInt(that.data.comments_data.comments[i].createtime);
+      let day = parseInt(Math.floor(diff_time / (60*60*24)));
+      console.log(diff_time);
+      let hour = day >0 ? Math.floor((diff_time - day*1440)/60) : Math.floor(diff_time/(60*60));
+      let minute = hour > 0 ? Math.floor(diff_time -day*1440 - hour*60) : Math.floor(diff_time/60);
+      console.log(day+'--'+hour+'--'+minute);
+      if(day > 0){
+        let month = new Date(parseInt(that.data.comments_data.comments[i].createtime)*1000).getMonth()+1;
+        let date = new Date(parseInt(that.data.comments_data.comments[i].createtime)*1000).getDate();
+        that.data.comments_data.comments[i].createtime = month+'-'+date;
+      }else if(hour > 0){
+        that.data.comments_data.comments[i].createtime = hour+'小时前';
+      }else{
+        if(minute>0){
+          that.data.comments_data.comments[i].createtime = minute+'分钟前';
+        }else{
+          that.data.comments_data.comments[i].createtime = diff_time+'秒前';
+        }
+      }
+    }
+    for(let i = 0;i<that.data.comments_data.hot_comments.length;i++){
+      let diff_time = cur_time-parseInt(that.data.comments_data.hot_comments[i].createtime);
+      let day = parseInt(Math.floor(diff_time / (60*60*24)));
+      let hour = day >0 ? Math.floor((diff_time - day*1440)/60) : Math.floor(diff_time/(60*60)); 
+      let minute = hour > 0 ? Math.floor(diff_time -day*1440 - hour*60) : Math.floor(diff_time/60);
+      if(day > 0){
+        let month = new Date(parseInt(that.data.comments_data.hot_comments[i].createtime)*1000).getMonth()+1;
+        let date = new Date(parseInt(that.data.comments_data.hot_comments[i].createtime)*1000).getDate();
+        that.data.comments_data.hot_comments[i].createtime = month+'-'+date;
+      }else if(hour > 0){
+        that.data.comments_data.hot_comments[i].createtime = hour+'小时前';
+      }else{
+        if(minute>0){
+          that.data.comments_data.hot_comments[i].createtime = minute+'分钟前';
+        }else{
+          that.data.comments_data.hot_comments[i].createtime = diff_time+'秒前';
+        }
+      }
+    }
+    that.setData({
+      'comments_data': that.data.comments_data
+    });
   },
   pauseHandler: function(){
     var that = this;
@@ -189,7 +149,7 @@ Page({
       that.setData({
         video_data: res.data.data
       });
-      that.dealTime();
+      that.dealVideoTime();
     }else{
       
     }
@@ -198,12 +158,13 @@ Page({
     var that = this;
     if(res.data.code == 200){
       var tmp_arr = res.data.data;
-      for(let i=0;i<tmp_arr.comments;i++){
-        tmp_arr.comments[i].ispoked = false
+      for(let i=0;i<tmp_arr.comments.length;i++){
+        tmp_arr.comments[i].ispoked = false;
       }
       that.setData({
         comments_data: tmp_arr
       });
+      that.dealCommentsTime();
     }else{
 
     }
@@ -261,7 +222,6 @@ Page({
   },
   collectSuccess: function(res){
     var that = this;
-    console.log(res);
     if(res.data.code == 200){
       if(that.data.video_data.ispraise){
         that.setData({
@@ -303,5 +263,41 @@ Page({
         'collect.show': false
       });
     }, 1600);
+  },
+  praiseHandler: function(e){
+    var that = this;
+    var index = e.currentTarget.dataset.cindex;
+    var commentid = e.currentTarget.dataset.commentid;
+    var data = {
+      commentid: commentid,
+      videoid: that.data.video_data.videoid
+    }
+    app.post_request(app.globalData.API_LIST.TEST.praise_comment, data, function(res){
+      if(res.data.code == 200){
+        that.data.comments_data.comments[index].ispoked = true;
+        that.data.comments_data.comments[index].praises = parseInt(that.data.comments_data.comments[index].praises)+1;
+        that.setData({
+          comments_data: that.data.comments_data
+        });
+      }
+    });
+  },
+  hotPraiseHandler: function(e){
+    var that = this;
+    var index = e.currentTarget.dataset.cindex;
+    var commentid = e.currentTarget.dataset.commentid;
+    var data = {
+      commentid: commentid,
+      videoid: that.data.video_data.videoid
+    }
+    app.post_request(app.globalData.API_LIST.TEST.praise_comment, data, function(res){
+      if(res.data.code == 200){
+        that.data.comments_data.hot_comments[index].ispoked = true;
+        that.data.comments_data.hot_comments[index].praises = parseInt(that.data.comments_data.hot_comments[index].praises)+1;
+        that.setData({
+          comments_data: that.data.comments_data
+        });
+      }
+    });
   }
 })

@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="media_list">
+<view class="media_list" wx:if="{{ hots_data }}">
     <navigator wx:for="{{ hots_data.list }}" class="media_item" wx:key="a" url="/pages/video-detail/video-detail?id={{ item.videoid }}">
         <view class="img_wrap">
             <image wx:if="{{ img_list[index].loaded }}" src="{{ img_list[index].url }}" class="fade_in" mode="top center" />
@@ -14,8 +14,11 @@
             <view class="media_title">{{ item.title }}</view>
         </view>
     </navigator>
+    <view class="loading-more">加载中...</view>
 </view>
-<view class="loading-area">加载中...</view>
+<view class="loading-img" wx:else>
+    <image src="../../assets/loading.png"></image>
+</view>
 <!-- 引入图片预加载组件 -->
 <import src="../../img-loader/img-loader.wxml"/>
 <template is="img-loader" data="{{ imgLoadList }}"></template>

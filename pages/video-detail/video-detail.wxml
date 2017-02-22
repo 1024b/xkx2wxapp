@@ -3,48 +3,72 @@
 <!--<view class="video-wrapper"></view>-->
 <image src="{{ collect.src }}" class="collect-gif {{ collect.show ? 'block-show' : 'block-hidden'}}"></image>
 <view class="video-info">
-    <view class="main-info">
-        <view class="author-info">
-            <image src="{{ video_data.avatar }}"></image>
-            <view>
-                <view class="video-author">{{ video_data.nickname }}</view>
-                <view class="video-time">{{ video_data.createtime }}</view>
+    <block wx:if="{{ video_data }}">
+        <view class="main-info">
+            <view class="author-info">
+                <image src="{{ video_data.avatar }}"></image>
+                <view>
+                    <view class="video-author">{{ video_data.nickname }}</view>
+                    <view class="video-time">{{ video_data.createtime }}</view>
+                </view>
+            </view>
+            <view class="collect-info" bindtap="collectHandler">
+                <image wx:if="{{ video_data.ispraise == 0 }}" src="{{ like_src }}" class="like-image"></image>
+                <image wx:else src="{{ liked_src }}" class="like-image"></image>
+                <view class="liked-count">{{ video_data.praisecount }}</view>
             </view>
         </view>
-        <view class="collect-info" bindtap="collectHandler">
-            <image wx:if="{{ video_data.ispraise == 0 }}" src="{{ like_src }}" class="like-image"></image>
-            <image wx:else src="{{ liked_src }}" class="like-image"></image>
-            <view class="liked-count">{{ video_data.praisecount }}</view>
-        </view>
-    </view>
-    <block wx:if="{{ video_data.desc || video_data.topic_list.length>0 }}">
-    <view class="share-info">
-        <view class="share-wrapper">
-            <view class="share-tri"></view>
-            <view class="share-text">
-                <text>{{ video_data.desc }}</text>
-                <view class="video-tt" wx:for="{{ video_data.topic_list }}" wx:key="c">#{{ item }}#</view>
+        <block wx:if="{{ video_data.desc || video_data.topic_list.length>0 }}">
+            <view class="share-info">
+                <view class="share-wrapper">
+                    <view class="share-tri"></view>
+                    <view class="share-text">
+                        <text>{{ video_data.desc }}</text>
+                        <view class="video-tt" wx:for="{{ video_data.topic_list }}" wx:key="c">#{{ item }}#</view>
+                    </view>
+                </view>
             </view>
+        </block>
+        <view class="sound-info">
+            <block wx:if="{{ video_data.voiceid == 999 }}">
+                <view class="sound-link">
+                    <image src="{{ sound_src }}"></image>
+                    <view class="sound-title">无音频</view>
+                </view>
+                <view class="visitor-count">{{ video_data.topiccount }}人参与</view>
+            </block>
+            <block wx:else>
+                <navigator url="/pages/sound-detail/sound-detail?musicid={{ video_data.voiceid }}" class="sound-link">
+                    <image src="{{ sound_src }}"></image>
+                    <view class="sound-title">{{ video_data.title }}</view>
+                </navigator>
+                <view class="visitor-count">{{ video_data.topiccount }}人参与</view>
+            </block>
         </view>
-    </view>
     </block>
-    <view class="sound-info">
-        <block wx:if="{{ video_data.voiceid == 999 }}">
+    <block wx:else>
+        <view class="main-info">
+            <view class="author-info">
+                <image src="{{ video_data.avatar }}"></image>
+                <view>
+                    <view class="video-author">暂无信息</view>
+                    <view class="video-time">暂无数据</view>
+                </view>
+            </view>
+            <view class="collect-info" bindtap="collectHandler">
+                <image src="{{ like_src }}" class="like-image"></image>
+                <view class="liked-count">0</view>
+            </view>
+        </view>
+        <view class="sound-info">
             <view class="sound-link">
                 <image src="{{ sound_src }}"></image>
-                <view class="sound-title">无音频</view>
+                <view class="sound-title">暂无数据</view>
             </view>
-            <view class="visitor-count">{{ video_data.topiccount }}人参与</view>
-        </block>
-        <block wx:else>
-            <navigator url="/pages/sound-detail/sound-detail?musicid={{ video_data.voiceid }}" class="sound-link">
-                <image src="{{ sound_src }}"></image>
-                <view class="sound-title">{{ video_data.title }}</view>
-            </navigator>
-            <view class="visitor-count">{{ video_data.topiccount }}人参与</view>
-        </block>
-    </view>
-    <view class="comments-info">
+            <view class="visitor-count">0人参与</view>
+        </view>
+    </block>
+    <view class="comments-info" wx:if="{{ comments_data }}">
         <view class="comments-title">
             <image src="{{ comment_src }}"></image>
             <view class="comments-count">{{ comments_data.total }}评论</view>
@@ -54,29 +78,60 @@
             <view>最热</view>
             <view class="comments-line"></view>
         </view>
-        <view class="comments-item" wx:for="{{ comments_data.hot_comments }}" wx:key="a">
-            <image src="{{ item.avatar }}" class="comments-avar"></image>
-            <view class="comments-detail">
-                <view class="comments-username">{{ item.nickname }}</view>
-                <view class="comments-time">20分钟前</view>
-                <view class="comments-content">{{ item.content }}</view>
-            </view>
-            <view class="comments-liked">
-                <image src="{{ comment_link_src }}"></image>
-                <view>{{ item.praises }}</view>
+        <view class="comments-hots">
+            <view class="comments-item" wx:for="{{ comments_data.hot_comments }}" wx:key="a">
+                <image src="{{ item.avatar }}" class="comments-avar"></image>
+                <view class="comments-detail">
+                    <view class="comments-username">{{ item.nickname }}</view>
+                    <view class="comments-time">{{ item.createtime }}</view>
+                    <view class="comments-content">{{ item.content }}</view>
+                </view>
+                <block wx:if="{{ !item.ispoked }}">
+                    <view class="comments-liked" data-commentid="{{ item.id }}" data-cindex="{{ index }}" bindtap="hotPraiseHandler">
+                        <image src="{{ comment_poke_src }}"></image>
+                        <view>{{ item.praises }}</view>
+                    </view>
+                </block>
+                <block wx:else>
+                    <view class="comments-liked" data-commentid="{{ item.id }}">
+                        <image src="{{ comment_poked_src }}"></image>
+                        <view class="poked-text">{{ item.praises }}</view>
+                    </view>
+                </block>
             </view>
         </view>
-        <view class="comments-item" wx:for="{{ comments_data.comments }}" wx:key="b">
-            <image src="{{ item.avatar }}" class="comments-avar"></image>
-            <view class="comments-detail">
-                <view class="comments-username">{{ item.nickname }}</view>
-                <view class="comments-time">20分钟前</view>
-                <view class="comments-content">{{ item.content }}</view>
+        <view class="comments-bar" wx:if="{{ comments_data.comments.length > 0 }}">
+            <view class="comments-line"></view>
+            <view>最新</view>
+            <view class="comments-line"></view>
+        </view>
+        <view class="comments-new">
+            <view class="comments-item" wx:for="{{ comments_data.comments }}" wx:key="b">
+                <image src="{{ item.avatar }}" class="comments-avar"></image>
+                <view class="comments-detail">
+                    <view class="comments-username">{{ item.nickname }}</view>
+                    <view class="comments-time">{{ item.createtime }}</view>
+                    <view class="comments-content">{{ item.content }}</view>
+                </view>
+                <block wx:if="{{ !item.ispoked }}">
+                    <view class="comments-liked" data-commentid="{{ item.id }}" data-cindex="{{ index }}" bindtap="praiseHandler">
+                        <image src="{{ comment_poke_src }}"></image>
+                        <view>{{ item.praises }}</view>
+                    </view>
+                </block>
+                <block wx:else>
+                    <view class="comments-liked" data-commentid="{{ item.id }}">
+                        <image src="{{ comment_poked_src }}"></image>
+                        <view class="poked-text">{{ item.praises }}</view>
+                    </view>
+                </block>
             </view>
-            <view class="comments-liked" data-commentid="{{ item.id }}" bindtap="praiseHandler">
-                <image src="{{ comment_link_src }}"></image>
-                <view>{{ item.praises }}</view>
-            </view>
+        </view>
+    </view>
+    <view class="comments-info" wx:else>
+        <view class="comments-title">
+            <image src="{{ comment_src }}"></image>
+            <view class="comments-count">暂无评论</view>
         </view>
     </view>
 </view>
