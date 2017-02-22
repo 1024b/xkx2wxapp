@@ -81,11 +81,20 @@ Page({
   },
   initData: function(){
     var that = this;
-    var data = {
-      page: 1,
-      limit: 10,
-      refresh: 1,
-      first_vid: ''
+    if(that.data.hots_data){
+      var data = {
+        page: 1,
+        limit: 10,
+        refresh: 1,
+        first_vid: that.data.hots_data.first_vid
+      }
+    }else{
+      var data = {
+        page: 1,
+        limit: 10,
+        refresh: 1,
+        first_vid: ''
+      }
     }
     app.post_request(app.globalData.API_LIST.TEST.video_list, data, that.initDataSuccess);
   },
