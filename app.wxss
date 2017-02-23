@@ -1,6 +1,6 @@
 /**app.wxss**/
 page{
-  background: #262630;
+  background: #1B1B23;
   color: #fff;
 }
 image{
@@ -13,6 +13,7 @@ image{
   text-align: center;
   font-size: 26rpx;
   padding: 10rpx 0;
+  background: #1B1B23;
 }
 .loading-img{
   width: 100vw;

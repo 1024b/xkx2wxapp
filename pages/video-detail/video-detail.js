@@ -51,7 +51,6 @@ Page({
     var day = parseInt(Math.floor(diff_time / (60*60*24)));
     var hour = day >0 ? Math.floor((diff_time - day*1440)/60) : Math.floor(diff_time/60); 
     var minute = hour > 0 ? Math.floor(diff_time -day*1440 - hour*60) : diff_time;
-    console.log(cur_time+'-'+that.data.video_data.createtime);
     if(day > 0){
       var month = new Date(parseInt(that.data.video_data.createtime)*1000).getMonth()+1;
       var date = new Date(parseInt(that.data.video_data.createtime)*1000).getDate();
@@ -145,11 +144,13 @@ Page({
   },
   initVideoSuccess: function(res){
     var that = this;
+    console.log(res);
     if(res.data.code == 200){
       that.setData({
         video_data: res.data.data
       });
       that.dealVideoTime();
+      that.sigTapHandler();
     }else{
       
     }
