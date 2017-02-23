@@ -117,7 +117,7 @@
 .comments-info{
     min-height: 200rpx;
     background: #1a1a21;
-    padding-bottom: 50rpx;
+    padding-bottom: 10rpx;
 }
 .comments-title{
     font-size: 24rpx;

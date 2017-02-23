@@ -10,6 +10,7 @@ Page({
     db_tap_time: '',
     sig_tap_time: '', 
     tap_type: 1,
+    comments_loading: true, 
     collect: {
       src: '../../assets/thumb-up.gif',
       show: false
@@ -43,6 +44,66 @@ Page({
   },
   onUnload:function(){
     // 页面关闭
+  },
+  onReachBottom: function(){
+    var that = this;
+    if(that.data.comments_data){
+      that.loadMoreComments();
+    }
+  },
+  loadMoreComments: function(){
+    var that = this;
+    if(that.data.comments_data.comments.length>=20){
+      that.setData({
+        comments_loading: true
+      });
+      var data2 = {
+        videoid: that.data.video_data.videoid,
+        page: that.data.comments_data.current_page+1,
+        limit: 20
+      }
+      app.post_request(app.globalData.API_LIST.TEST.video_comments, data2, that.loadMoreCommentsSuccess);
+    }
+  },
+  loadMoreCommentsSuccess: function(res){
+    var that = this;
+    that.setData({
+      comments_loading: false
+    });
+    if(res.data.code == 200){
+      if(res.data.data.comments.length>0){
+        var tmp_arr = that.data.comments_data.comments;
+        var new_data = res.data.data.comments;
+        var cur_time = parseInt(new Date().getTime()/1000);
+        var tmp_arr = that.data.comments_data.comments;
+        for(let i = 0;i<new_data.length;i++){
+          let diff_time = cur_time-parseInt(new_data[i].createtime);
+          let day = parseInt(Math.floor(diff_time / (60*60*24)));
+          console.log(diff_time);
+          let hour = day >0 ? Math.floor((diff_time - day*1440)/60) : Math.floor(diff_time/(60*60));
+          let minute = hour > 0 ? Math.floor(diff_time -day*1440 - hour*60) : Math.floor(diff_time/60);
+          if(day > 0){
+            let month = new Date(parseInt(new_data[i].createtime)*1000).getMonth()+1;
+            let date = new Date(parseInt(new_data[i].createtime)*1000).getDate();
+            new_data[i].createtime = month+'-'+date;
+          }else if(hour > 0){
+            new_data[i].createtime = hour+'小时前';
+          }else{
+            if(minute>0){
+              new_data[i].createtime = minute+'分钟前';
+            }else{
+              new_data[i].createtime = diff_time+'秒前';
+            }
+          }
+        }
+        that.setData({
+          'comments_data.comments': tmp_arr.concat(new_data),
+          'comments_data.current_page': res.data.data.current_page
+        });
+      }
+    }else{
+
+    }
   },
   dealVideoTime: function(){
     var that = this;
@@ -83,7 +144,6 @@ Page({
       console.log(diff_time);
       let hour = day >0 ? Math.floor((diff_time - day*1440)/60) : Math.floor(diff_time/(60*60));
       let minute = hour > 0 ? Math.floor(diff_time -day*1440 - hour*60) : Math.floor(diff_time/60);
-      console.log(day+'--'+hour+'--'+minute);
       if(day > 0){
         let month = new Date(parseInt(that.data.comments_data.comments[i].createtime)*1000).getMonth()+1;
         let date = new Date(parseInt(that.data.comments_data.comments[i].createtime)*1000).getDate();
@@ -144,7 +204,6 @@ Page({
   },
   initVideoSuccess: function(res){
     var that = this;
-    console.log(res);
     if(res.data.code == 200){
       that.setData({
         video_data: res.data.data
@@ -157,6 +216,9 @@ Page({
   },
   initCommentsSuccess: function(res){
     var that = this;
+    that.setData({
+      comments_loading: false
+    });
     if(res.data.code == 200){
       var tmp_arr = res.data.data;
       for(let i=0;i<tmp_arr.comments.length;i++){

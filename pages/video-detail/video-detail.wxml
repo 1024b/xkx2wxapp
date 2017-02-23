@@ -134,4 +134,5 @@
             <view class="comments-count">暂无评论</view>
         </view>
     </view>
+    <view wx:if="{{ comments_loading }}" class="loading-more">加载中...</view>
 </view>
