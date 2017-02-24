@@ -1,7 +1,7 @@
 <!--pages/video-detail/video-detail.wxml-->
 <video autoplay="true" src="{{ video_data.linkurl }}" class="video-detail" id="videoDetail" bindpause="pauseHandler" bindplay="playHandler"></video>
 <!--<view class="video-wrapper"></view>-->
-<image src="{{ collect.src }}" class="collect-gif {{ collect.show ? 'block-show' : 'block-hidden'}}"></image>
+<!--<image src="{{ collect.src }}" class="collect-gif {{ collect.show ? 'block-show' : 'block-hidden'}}"></image>-->
 <view class="video-info">
     <block wx:if="{{ video_data }}">
         <view class="main-info">
@@ -29,21 +29,12 @@
                 </view>
             </view>
         </block>
-        <view class="sound-info">
-            <block wx:if="{{ video_data.voiceid == 999 }}">
-                <!--<view class="sound-link">
-                    <image src="{{ sound_src }}"></image>
-                    <view class="sound-title">无音频</view>
-                </view>
-                <view class="visitor-count">{{ video_data.topiccount }}人参与</view>-->
-            </block>
-            <block wx:else>
-                <navigator url="/pages/sound-detail/sound-detail?musicid={{ video_data.voiceid }}" class="sound-link">
-                    <image src="{{ sound_src }}"></image>
-                    <view class="sound-title">{{ video_data.title }}</view>
-                </navigator>
-                <view class="visitor-count">{{ video_data.opusnum }}人参与</view>
-            </block>
+        <view class="sound-info" wx:if="{{ video_data.voiceid != 999 }}">
+            <navigator url="/pages/sound-detail/sound-detail?musicid={{ video_data.voiceid }}" class="sound-link">
+                <image src="{{ sound_src }}"></image>
+                <view class="sound-title">{{ video_data.title }}</view>
+            </navigator>
+            <view class="visitor-count">{{ video_data.opusnum }}人参与</view>
         </view>
     </block>
     <block wx:else>

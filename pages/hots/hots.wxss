@@ -18,10 +18,10 @@ page{
   box-sizing: border-box;
 }
 .media_item_left{
-  padding: 5rpx 0rpx 0rpx 5rpx;
+  padding: 4rpx 0rpx 0rpx 4rpx;
 }
 .media_item_right{
-  padding: 5rpx 5rpx 0rpx 0rpx;
+  padding: 4rpx 4rpx 0rpx 0rpx;
 }
 .img_wrap {
   width: 100%;

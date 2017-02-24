@@ -15,10 +15,10 @@
   box-sizing: border-box;
 }
 .media_item_left{
-  padding: 5rpx 0rpx 0rpx 5rpx;
+  padding: 4rpx 0rpx 0rpx 4rpx;
 }
 .media_item_right{
-  padding: 5rpx 5rpx 0rpx 0rpx;
+  padding: 4rpx 4rpx 0rpx 0rpx;
 }
 .img_wrap {
   width: 100%;
@@ -126,8 +126,8 @@
   border-radius: 50%;
 }
 .sound-avar{
-  width: 198rpx;
-  height: 198rpx;
+  width: 200rpx;
+  height: 200rpx;
   margin: 6rpx;
   border-radius: 50%;
   position: absolute;
