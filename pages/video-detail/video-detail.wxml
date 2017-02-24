@@ -1,5 +1,5 @@
 <!--pages/video-detail/video-detail.wxml-->
-<video src="{{ video_data.linkurl }}" class="video-detail" id="videoDetail" bindpause="pauseHandler" bindplay="playHandler"></video>
+<video autoplay="true" src="{{ video_data.linkurl }}" class="video-detail" id="videoDetail" bindpause="pauseHandler" bindplay="playHandler"></video>
 <!--<view class="video-wrapper"></view>-->
 <image src="{{ collect.src }}" class="collect-gif {{ collect.show ? 'block-show' : 'block-hidden'}}"></image>
 <view class="video-info">

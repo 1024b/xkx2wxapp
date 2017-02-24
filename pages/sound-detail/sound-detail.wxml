@@ -1,6 +1,6 @@
 <!--pages/sound-detail/sound-detail.wxml-->
 <view class="sound-detail" wx:if="{{ sound_data }}">
-    <image src="{{ sound_data.cover }}" mode="top center" class="wrapper-bg"></image>
+    <image src="{{ sound_data.cover }}" mode="aspectFill" class="wrapper-bg"></image>
     <audio src="{{ sound_data.audio }}" id="soundDetail" bindended="endHandler"></audio>
     <view class="cover-bg"></view>
     <view class="sound-container">

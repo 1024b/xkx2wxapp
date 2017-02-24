@@ -78,6 +78,10 @@
   position: absolute;
   top: 0;
   left: 0;
+  -webkit-filter: blur(20rpx);
+  -moz-filter: blur(20rpx);
+  -ms-filter: blur(20rpx);    
+  filter: blur(20rpx);
 }
 .cover-img{
   position: absolute;

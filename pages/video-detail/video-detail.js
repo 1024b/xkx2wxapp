@@ -110,15 +110,15 @@ Page({
     var cur_time = parseInt(new Date().getTime()/1000);
     var diff_time = cur_time-parseInt(that.data.video_data.createtime);
     var day = parseInt(Math.floor(diff_time / (60*60*24)));
-    var hour = day >0 ? Math.floor((diff_time - day*1440)/60) : Math.floor(diff_time/60); 
-    var minute = hour > 0 ? Math.floor(diff_time -day*1440 - hour*60) : diff_time;
+    var hour = day >0 ? Math.floor((diff_time - day*1440)/60) : Math.floor(diff_time/(60*60)); 
+    var minute = hour > 0 ? Math.floor(diff_time -day*1440 - hour*60) : Math.floor(diff_time/60);
     if(day > 0){
       var month = new Date(parseInt(that.data.video_data.createtime)*1000).getMonth()+1;
       var date = new Date(parseInt(that.data.video_data.createtime)*1000).getDate();
       that.setData({
         'video_data.createtime': month+'-'+date
       });
-    }else if(hour >= 0){
+    }else if(hour > 0){
       that.setData({
         'video_data.createtime': hour+'小时前'
       });
@@ -129,7 +129,7 @@ Page({
         });
       }else{
         that.setData({
-          'video_data.createtime': '刚刚'
+          'video_data.createtime': diff_time+'秒前'
         });
       }
     }
@@ -209,7 +209,6 @@ Page({
         video_data: res.data.data
       });
       that.dealVideoTime();
-      that.sigTapHandler();
     }else{
       
     }
