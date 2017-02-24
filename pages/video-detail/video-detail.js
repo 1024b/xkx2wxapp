@@ -33,10 +33,10 @@ Page({
   },
   onShareAppMessage: function () {
     var that = this;
-    var title = that.data.video_data.title;
+    var title = that.data.video_data.desc ? that.data.video_data.desc : that.data.video_data.title;
     var url = '/pages/video-detail/video-detail?id='+that.data.video_data.videoid;
     return {
-      title: title,
+      title: title ? title : '小咖秀lite',
       path: url
     }
   },

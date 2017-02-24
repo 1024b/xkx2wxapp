@@ -46,7 +46,7 @@ Page({
   },
   onShareAppMessage: function () {
     var that = this;
-    var title = that.data.sound_data.title;
+    var title = that.data.sound_data.title ? that.data.sound_data.title : '小咖秀lite';
     var url = '/pages/sound-detail/sound-detail?musicid='+that.data.sound_data.musicid;
     return {
       title: title,
