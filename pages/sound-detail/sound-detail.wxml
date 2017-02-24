@@ -13,7 +13,7 @@
         </view>
         <view class="sound-time">时长：{{ sound_data.duration }}</view>
         <view class="sound-data">{{ sound_data.dig }} 作品<text class="text-gray"></text>{{ sound_data.opusnum }} 收藏</view>
-        <view class="sound-players">
+        <view class="sound-players" wx:if="{{ sound_data.actors.length>0 }}">
             <view class="sound-player-tip">演员：</view>
             <view class="sound-player-list">
                 <view class="sound-player-item" wx:key="a" wx:for="{{ sound_data.actors }}">{{ item.name }}</view>

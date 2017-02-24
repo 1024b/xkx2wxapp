@@ -49,7 +49,7 @@ Page({
     var dig = that.data.sound_data.dig;
     var opusnum = that.data.sound_data.opusnum;
     that.setData({
-      'sound_data.dig': dig > 1000 ? (dig/10000).toFixed(1)+'万' : dig,
+      'sound_data.dig': dig > 10000 ? (dig/10000).toFixed(1)+'万' : dig,
       'sound_data.opusnum': opusnum > 10000 ? (opusnum/10000).toFixed(1)+'万' : opusnum 
     });
   },

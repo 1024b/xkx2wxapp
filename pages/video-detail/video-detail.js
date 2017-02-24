@@ -139,6 +139,7 @@ Page({
     var cur_time = parseInt(new Date().getTime()/1000);
     var tmp_arr = that.data.comments_data.comments;
     for(let i = 0;i<that.data.comments_data.comments.length;i++){
+      //处理时间
       let diff_time = cur_time-parseInt(that.data.comments_data.comments[i].createtime);
       let day = parseInt(Math.floor(diff_time / (60*60*24)));
       console.log(diff_time);
@@ -157,8 +158,14 @@ Page({
           that.data.comments_data.comments[i].createtime = diff_time+'秒前';
         }
       }
+      //处理赞数
+      let praises = that.data.comments_data.comments.praises;
+      if(praises > 10000){
+        that.data.comments_data.comments.praise = (praises/10000).toFixed(1)+'万';
+      }
     }
     for(let i = 0;i<that.data.comments_data.hot_comments.length;i++){
+      //处理时间
       let diff_time = cur_time-parseInt(that.data.comments_data.hot_comments[i].createtime);
       let day = parseInt(Math.floor(diff_time / (60*60*24)));
       let hour = day >0 ? Math.floor((diff_time - day*1440)/60) : Math.floor(diff_time/(60*60)); 
@@ -175,6 +182,11 @@ Page({
         }else{
           that.data.comments_data.hot_comments[i].createtime = diff_time+'秒前';
         }
+      }
+      //处理赞数
+      let praises = that.data.comments_data.hot_comments.praises;
+      if(praises > 10000){
+        that.data.comments_data.hot_comments.praises = (praises/10000).toFixed(1)+'万';
       }
     }
     that.setData({

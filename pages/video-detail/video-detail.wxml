@@ -107,13 +107,13 @@
                 <block wx:if="{{ !item.ispoked }}">
                     <view class="comments-liked" data-commentid="{{ item.id }}" data-cindex="{{ index }}" bindtap="praiseHandler">
                         <image src="{{ comment_poke_src }}"></image>
-                        <view>{{ item.praises }}</view>
+                        <view class="poke-count">{{ item.praises }}</view>
                     </view>
                 </block>
                 <block wx:else>
                     <view class="comments-liked" data-commentid="{{ item.id }}">
                         <image src="{{ comment_poked_src }}"></image>
-                        <view class="poked-text">{{ item.praises }}</view>
+                        <view class="poke-count poked-text">{{ item.praises }}</view>
                     </view>
                 </block>
             </view>

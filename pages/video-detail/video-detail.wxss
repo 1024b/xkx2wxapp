@@ -89,9 +89,9 @@
 }
 .sound-info{
     display: flex;
-    padding: 0rpx 30rpx 30rpx 30rpx;
-    margin-top: 25rpx;
+    padding: 25rpx 30rpx 30rpx 30rpx;
     align-items: center;
+    background: #262630;
 }
 .sound-link{
     max-width: 80%;
@@ -189,6 +189,10 @@
     width: 28rpx;
     height: 26rpx;
     margin-right: 16rpx;
+}
+.poke-count{
+    text-align: center;
+    width: 50rpx;
 }
 .collect-gif{
     width: 298rpx;
