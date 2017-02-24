@@ -50,6 +50,14 @@ Page({
       }
     })
   },
+  onShareAppMessage: function () {
+    var that = this;
+    var title = '小咖秀lite';
+    return {
+      title: title,
+      path: '/pages/hots/hots'
+    }
+  },
   loadImages() {
     //同时发起全部图片的加载
     this.data.img_list.forEach(item => {
