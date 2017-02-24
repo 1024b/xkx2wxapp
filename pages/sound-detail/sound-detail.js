@@ -24,6 +24,7 @@ Page({
     img_list: [],
     sound_context: '',
     sound_paused: true,
+    video_loading: false,
     avar: '../../assets/morentouxiang@2x.png',
     sound_pause_src: '../../assets/sound-pause@2x.png',
     sound_play_src: '../../assets/sound-play@2x.png',
@@ -89,9 +90,12 @@ Page({
   },
   loadMore: function(){
     var that = this;
+    that.setData({
+      video_loading: true
+    });
     var data = {
       page: that.data.video_data.current_page+1,
-      limit: 10,
+      limit: 20,
       musicid: that.data.sound_data.musicid
     }
     app.post_request(app.globalData.API_LIST.TEST.sound_video_list, data, that.loadMoreSuccess);
@@ -117,14 +121,12 @@ Page({
     }else{
 
     }
+    that.setData({
+      video_loading: false
+    });
   },
   onReachBottom: function(){
     var that = this;
-    wx.showToast({
-      title: '加载中...',
-      icon: 'loading',
-      duration: 2000
-    });
     that.loadMore();
   },
   soundControlHandler: function(){
@@ -181,7 +183,7 @@ Page({
     var that = this;
     var data = {
       page: 1,
-      limit: 10,
+      limit: 20,
       musicid: musicid
     }
     app.post_request(app.globalData.API_LIST.TEST.sound_video_list, data, that.initSoundVideosSuccess);

@@ -25,6 +25,7 @@ Page({
   data: {
     img_list: [],
     avar: '../../assets/morentouxiang@2x.png',
+    video_loading: false,
     hots_data: null
   },
   onLoad() {
@@ -76,11 +77,6 @@ Page({
   },
   onReachBottom: function(){
     var that = this;
-    /*wx.showToast({
-      title: '加载中...',
-      icon: 'loading',
-      duration: 2000
-    });*/
     that.loadMore();
   },
   onPullDownRefresh: function(){
@@ -92,14 +88,14 @@ Page({
     if(that.data.hots_data){
       var data = {
         page: 1,
-        limit: 10,
+        limit: 20,
         refresh: 1,
         first_vid: that.data.hots_data.first_vid
       }
     }else{
       var data = {
         page: 1,
-        limit: 10,
+        limit: 20,
         refresh: 1,
         first_vid: ''
       }
@@ -132,9 +128,12 @@ Page({
   },
   loadMore: function(){
     var that = this;
+    that.setData({
+      video_loading: true
+    });
     var data = {
       page: that.data.hots_data.current_page+1,
-      limit: 10,
+      limit: 20,
       refresh: 0,
       first_vid: that.data.hots_data.first_vid
     }
@@ -161,5 +160,8 @@ Page({
     }else{
 
     }
+    that.setData({
+      video_loading: false
+    });
   }
 })
