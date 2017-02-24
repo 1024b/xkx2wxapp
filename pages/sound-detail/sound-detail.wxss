@@ -4,7 +4,7 @@
     100% { opacity: 1; }
 }
 .media_list {
-    margin: 0 0 10rpx 0;
+    margin: 0px 0px 10 0px;
     display: flex;
     flex-wrap: wrap;
 }
@@ -29,44 +29,52 @@
 }
 .img_wrap>image {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 0px;
+  left: 0px;
 }
 .fade_in {
   animation: fadeIn 1s both;
 }
 .media_info{
+  height: 106rpx;
   background: #262630;
-  padding: 5rpx 30rpx 20rpx 30rpx;
+  padding: 0rpx 30rpx 20rpx 30rpx;
+  box-sizing: border-box;
 }
 .media_userinfo{
+  height: 33rpx;
+  line-height: 33rpx;
   font-size: 24rpx;
   display: flex;
+  position: relative;
 }
 .user_avar{
-  width: 50rpx;
-  height: 50rpx;
+  width: 60rpx;
+  height: 60rpx;
   background: #fff;
   border-radius: 50%;
-  position: relative;
+  position: absolute;
   top: -30rpx;
 }
 .user_avar image{
   border-radius: 50%;
 }
 .user_name{
-  width: calc( 100% - 65rpx );
-  margin-left: 15rpx;
+  width: calc( 100% - 75rpx );
+  margin-left: 75rpx;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 .media_title{
+  height: 37rpx;
+  line-height: 37rpx;
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   font-size: 26rpx;
+  margin-top: 12rpx;
 }
 
 .sound-detail{

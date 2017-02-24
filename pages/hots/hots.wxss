@@ -77,5 +77,5 @@ page{
   white-space: nowrap;
   text-overflow: ellipsis;
   font-size: 26rpx;
-  margin-top: 16rpx;
+  margin-top: 12rpx;
 }

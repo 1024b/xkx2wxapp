@@ -42,7 +42,7 @@
     </view>
 </view>
 <view class="media_list" wx:if="{{ video_data }}">
-    <navigator wx:for="{{video_data.videos }}" class="media_item {{ item%2 == 0 ? 'media_item_left' : 'media_item_right' }}" wx:key="a" url="/pages/video-detail/video-detail?id={{ item.videoid }}">
+    <navigator wx:for="{{video_data.videos }}" class="media_item {{ index%2 == 0 ? 'media_item_left' : 'media_item_right' }}" wx:key="a" url="/pages/video-detail/video-detail?id={{ item.videoid }}">
         <view class="img_wrap">
             <image wx:if="{{ img_list[index].loaded }}" src="{{ img_list[index].url }}" class="fade_in" mode="top center" />
         </view>
