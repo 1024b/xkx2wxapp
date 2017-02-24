@@ -31,6 +31,15 @@ Page({
     that.data.video_context = wx.createVideoContext('videoDetail');
     that.initVideoDetail(options.id);
   },
+  onShareAppMessage: function () {
+    var that = this;
+    var title = that.data.video_data.title;
+    var url = '/pages/video-detail/video-detail?id='+that.data.video_data.videoid;
+    return {
+      title: title,
+      path: url
+    }
+  },
   onReady:function(){
     // 页面渲染完成
   },

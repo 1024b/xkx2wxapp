@@ -44,6 +44,15 @@ Page({
     that.initSoundDetail(options.musicid);
     that.initSoundVideos(options.musicid);
   },
+  onShareAppMessage: function () {
+    var that = this;
+    var title = that.data.sound_data.title;
+    var url = '/pages/sound-detail/sound-detail?musicid='+that.data.sound_data.musicid;
+    return {
+      title: title,
+      path: url
+    }
+  },
   dealNums: function(){
     var that = this;
     var dig = that.data.sound_data.dig;

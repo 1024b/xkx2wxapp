@@ -12,7 +12,7 @@
     height: calc( 100vw - 100rpx );
     background: #fff;
     position: fixed;
-    top: 0rpx;
+    top: 0;
     z-index: 10000;
 }
 .main-info{
@@ -71,8 +71,8 @@
     margin-top: 15rpx;
 }
 .share-tri{
-    width: 0rpx;
-    height: 0rpx;
+    width: 0;
+    height: 0;
     border-bottom: 15rpx solid #383847;
     border-left: 15rpx solid transparent;
     border-right: 15rpx solid transparent;
@@ -161,7 +161,7 @@
 }
 .comments-detail{
     width: calc( 100% - 220rpx );
-    padding: 0rpx 20rpx;
+    padding: 0 20rpx;
 }
 .comments-username{
     font-size: 28rpx;
