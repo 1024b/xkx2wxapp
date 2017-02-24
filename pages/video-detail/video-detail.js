@@ -346,12 +346,33 @@ Page({
       commentid: commentid,
       videoid: that.data.video_data.videoid
     }
+    that.data.comments_data.comments[index].ispoked = true;
+    that.data.comments_data.comments[index].praises = parseInt(that.data.comments_data.comments[index].praises)+1;
+    that.setData({
+      comments_data: that.data.comments_data
+    });
     app.post_request(app.globalData.API_LIST.TEST.praise_comment, data, function(res){
       if(res.data.code == 200){
-        that.data.comments_data.comments[index].ispoked = true;
-        that.data.comments_data.comments[index].praises = parseInt(that.data.comments_data.comments[index].praises)+1;
-        that.setData({
-          comments_data: that.data.comments_data
+        
+      }else{
+        wx.showToast({
+          title: '重新登陆中...',
+          icon: 'loading',
+          duration: 3000
+        });
+        app.initSession(function(){
+          wx.hideToast();
+          app.post_request(app.globalData.API_LIST.TEST.praise_comment, data, function(res){
+            if(res.data.code == 200){
+              
+            }else{
+              that.data.comments_data.hot_comments[index].ispoked = false;
+              that.data.comments_data.hot_comments[index].praises = parseInt(that.data.comments_data.hot_comments[index].praises)-1;
+              that.setData({
+                comments_data: that.data.comments_data
+              });
+            }
+          });
         });
       }
     });
@@ -364,12 +385,33 @@ Page({
       commentid: commentid,
       videoid: that.data.video_data.videoid
     }
+    that.data.comments_data.hot_comments[index].ispoked = true;
+    that.data.comments_data.hot_comments[index].praises = parseInt(that.data.comments_data.hot_comments[index].praises)+1;
+    that.setData({
+      comments_data: that.data.comments_data
+    });
     app.post_request(app.globalData.API_LIST.TEST.praise_comment, data, function(res){
       if(res.data.code == 200){
-        that.data.comments_data.hot_comments[index].ispoked = true;
-        that.data.comments_data.hot_comments[index].praises = parseInt(that.data.comments_data.hot_comments[index].praises)+1;
-        that.setData({
-          comments_data: that.data.comments_data
+        
+      }else{
+        wx.showToast({
+          title: '重新登陆中...',
+          icon: 'loading',
+          duration: 3000
+        });
+        app.initSession(function(){
+          wx.hideToast();
+          app.post_request(app.globalData.API_LIST.TEST.praise_comment, data, function(res){
+            if(res.data.code == 200){
+              
+            }else{
+              that.data.comments_data.hot_comments[index].ispoked = false;
+              that.data.comments_data.hot_comments[index].praises = parseInt(that.data.comments_data.hot_comments[index].praises)-1;
+              that.setData({
+                comments_data: that.data.comments_data
+              });
+            }
+          });
         });
       }
     });
