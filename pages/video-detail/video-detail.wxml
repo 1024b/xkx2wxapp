@@ -30,7 +30,11 @@
             </view>
         </block>
         <view class="sound-info" wx:if="{{ video_data.voiceid != 999 }}">
-            <navigator url="/pages/sound-detail/sound-detail?musicid={{ video_data.voiceid }}" class="sound-link">
+            <view class="sound-link" wx:if="{{ fromaudio == 1 }}" bindtap="navbackHandler">
+                <image src="{{ sound_src }}"></image>
+                <view class="sound-title">{{ video_data.title }}</view>
+            </view>
+            <navigator wx:else url="/pages/sound-detail/sound-detail?musicid={{ video_data.voiceid }}" class="sound-link">
                 <image src="{{ sound_src }}"></image>
                 <view class="sound-title">{{ video_data.title }}</view>
             </navigator>

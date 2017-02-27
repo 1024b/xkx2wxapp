@@ -15,6 +15,7 @@ Page({
       src: '../../assets/thumb-up.gif',
       show: false
     },
+    fromaudio: 0,
     avar: '../../assets/morentouxiang@2x.png',
     like_src: '../../assets/like-gray@2x.png',
     liked_src: '../../assets/like-red@2x.png',
@@ -28,7 +29,11 @@ Page({
   onLoad:function(options){
     // 页面初始化 options为页面跳转所带来的参数
     var that = this;
-    that.data.video_context = wx.createVideoContext('videoDetail');
+    //that.data.video_context = wx.createVideoContext('videoDetail');
+    that.setData({
+      video_context: wx.createVideoContext('videoDetail'),
+      fromaudio: options.fromaudio
+    });
     that.initVideoDetail(options.id);
   },
   onShareAppMessage: function () {
@@ -424,5 +429,20 @@ Page({
         });
       }
     });
+  },
+  navbackHandler: function(){
+    var that = this;
+    wx.navigateBack({
+      delta: 1, // 回退前 delta(默认为1) 页面
+      success: function(res){
+        // success
+      },
+      fail: function() {
+        // fail
+      },
+      complete: function() {
+        // complete
+      }
+    })
   }
 })
