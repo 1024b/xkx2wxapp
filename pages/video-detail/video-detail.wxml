@@ -38,7 +38,7 @@
         </view>
     </block>
     <block wx:else>
-        <view class="main-info">
+        <!--<view class="main-info">
             <view class="author-info">
                 <image src="{{ video_data.avatar }}"></image>
                 <view>
@@ -57,7 +57,7 @@
                 <view class="sound-title">暂无数据</view>
             </view>
             <view class="visitor-count">0人参与</view>
-        </view>
+        </view>-->
     </block>
     <view class="comments-info" wx:if="{{ comments_data }}">
         <view class="comments-title">
@@ -122,7 +122,7 @@
     <view class="comments-info" wx:else>
         <view class="comments-title">
             <image src="{{ comment_src }}"></image>
-            <view class="comments-count">暂无评论</view>
+            <view class="comments-count">评论</view>
         </view>
     </view>
     <view wx:if="{{ comments_loading }}" class="loading-more">加载中...</view>

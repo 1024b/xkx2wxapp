@@ -31,14 +31,8 @@
             <!--<image class="sound-avar sound-cover-rotate {{ !sound_paused ? 'rotate-running' : 'rotate-paused' }}" src="{{ sound_data.cover }}"></image>-->
             <image src="{{ sound_paused ? sound_pause_src : sound_play_src }}" class="sound-control" bindtap="soundControlHandler"></image>
         </view>
-        <view class="sound-time">时长：暂无数据</view>
+        <view class="sound-time">时长：00:00</view>
         <view class="sound-data">0 作品<text class="text-gray">|</text>0 收藏</view>
-        <view class="sound-players">
-            <view class="sound-player-tip">演员：</view>
-            <view class="sound-player-list">
-                <view class="sound-player-item">暂无数据</view>
-            </view>
-        </view>
     </view>
 </view>
 <view class="media_list" wx:if="{{ video_data }}">
