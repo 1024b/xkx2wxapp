@@ -336,17 +336,7 @@ Page({
             if(res.data.code == 200){
               
             }else{
-              if(that.data.video_data.ispraise){
-                that.setData({
-                  'video_data.ispraise': 0,
-                  'video_data.praisecount': that.data.video_data.praisecount-1
-                });
-              }else{
-                that.setData({
-                  'video_data.ispraise': 1,
-                  'video_data.praisecount': that.data.video_data.praisecount+1
-                });
-              }
+              that.resetCollectStatus();
             }
           });
         }else{
@@ -354,20 +344,26 @@ Page({
             if(res.data.code == 200){
             
             }else{
-              if(that.data.video_data.ispraise){
-                that.setData({
-                  'video_data.ispraise': 0,
-                  'video_data.praisecount': that.data.video_data.praisecount-1
-                });
-              }else{
-                that.setData({
-                  'video_data.ispraise': 1,
-                  'video_data.praisecount': that.data.video_data.praisecount+1
-                });
-              }
+              that.resetCollectStatus();
             }
           });
         }
+      }, function(){
+        that.resetCollectStatus();
+      }, null);
+    }
+  },
+  resetCollectStatus: function(){
+    var that = this;
+    if(that.data.video_data.ispraise){
+      that.setData({
+        'video_data.ispraise': 0,
+        'video_data.praisecount': that.data.video_data.praisecount-1
+      });
+    }else{
+      that.setData({
+        'video_data.ispraise': 1,
+        'video_data.praisecount': that.data.video_data.praisecount+1
       });
     }
   },
@@ -425,14 +421,12 @@ Page({
             if(res.data.code == 200){
               
             }else{
-              that.data.comments_data.hot_comments[index].ispoked = false;
-              that.data.comments_data.hot_comments[index].praises = parseInt(that.data.comments_data.hot_comments[index].praises)-1;
-              that.setData({
-                comments_data: that.data.comments_data
-              });
+              that.resetCommentStatus(index);
             }
           });
-        });
+        }, function(){
+          that.resetCommentStatus(index);
+        }, null);
       }
     });
   },
@@ -464,15 +458,29 @@ Page({
             if(res.data.code == 200){
               
             }else{
-              that.data.comments_data.hot_comments[index].ispoked = false;
-              that.data.comments_data.hot_comments[index].praises = parseInt(that.data.comments_data.hot_comments[index].praises)-1;
-              that.setData({
-                comments_data: that.data.comments_data
-              });
+              that.resetHotCommentStatus(index);
             }
           });
-        });
+        }, function(){
+          that.resetHotCommentStatus(index);
+        }, null);
       }
+    });
+  },
+  resetCommentStatus: function(index){
+    var that = this;
+    that.data.comments_data.comments[index].ispoked = false;
+    that.data.comments_data.comments[index].praises = parseInt(that.data.comments_data.comments[index].praises)-1;
+    that.setData({
+      comments_data: that.data.comments_data
+    });
+  },
+  resetHotCommentStatus: function(index){
+    var that = this;
+    that.data.comments_data.hot_comments[index].ispoked = false;
+    that.data.comments_data.hot_comments[index].praises = parseInt(that.data.comments_data.hot_comments[index].praises)-1;
+    that.setData({
+      comments_data: that.data.comments_data
     });
   },
   navbackHandler: function(){

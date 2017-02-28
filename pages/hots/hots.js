@@ -3,7 +3,6 @@
 var app = getApp()
 
 const ImgLoader = require('../../img-loader/img-loader.js')
-
 //生成一些测试数据
 function genImgListData() {
     let images = [
@@ -39,12 +38,12 @@ Page({
           app.globalData.userData.sessionId = res.data;
           that.initData();
         }else{
-         app.initSession(that.initData);
+         app.initSession(null, null, that.initData);
         }
       },
       fail: function() {
         // fail
-        app.initSession(that.initData);
+        app.initSession(null, null, that.initData);
       },
       complete: function() {
         // complete

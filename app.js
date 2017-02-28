@@ -22,7 +22,7 @@ App({
       })
     }
   },
-  initSession: function(nextAction){
+  initSession: function(success, fail, complete){
     var that = this;
     wx.login({
       success: function (res) {
@@ -51,7 +51,7 @@ App({
                     data: res.data.data.session_id,
                     success: function(res){
                       // success
-                      //typeof nextAction == "function" && nextAction()
+                      typeof success == "function" && success()
                     },
                     fail: function() {
                       // fail
@@ -69,11 +69,22 @@ App({
               },
               complete: function() {
                 // complete
-                typeof nextAction == "function" && nextAction()
+                
               }
             })
+          },
+          fail: function(){
+            console.log('getuserinfo fail');
+            typeof fail == "function" && fail();
           }
         })
+      },
+      fail: function(){
+        console.log('login fail');
+        typeof fail == "function" && fail();
+      },
+      complete: function(){
+        typeof complete == "function" && complete();
       }
     })
   },
