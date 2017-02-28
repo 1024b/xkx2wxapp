@@ -51,7 +51,7 @@ App({
                     data: res.data.data.session_id,
                     success: function(res){
                       // success
-                      typeof nextAction == "function" && nextAction()
+                      //typeof nextAction == "function" && nextAction()
                     },
                     fail: function() {
                       // fail
@@ -61,7 +61,7 @@ App({
                     }
                   })
                 }else{
-
+                  
                 }
               },
               fail: function() {
@@ -69,6 +69,7 @@ App({
               },
               complete: function() {
                 // complete
+                typeof nextAction == "function" && nextAction()
               }
             })
           }
@@ -82,7 +83,7 @@ App({
       code: '',
       userInfo: null
     },
-    ENV: 1,  //0测试，1正式
+    ENV: 0,  //0测试，1正式
     API_LIST: {
       TEST: {
         video_list: 'https://testapi.xiaokaxiu.com/www/wx/get_videos',

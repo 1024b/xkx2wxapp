@@ -303,27 +303,72 @@ Page({
       videoid: that.data.video_data.videoid
     }
     if(that.data.video_data.ispraise){
+      that.setData({
+        'video_data.ispraise': 0,
+        'video_data.praisecount': that.data.video_data.praisecount-1
+      });
       app.post_request(app.getAPI('cancel_praise_video'), data, that.collectSuccess);
     }else{
+      that.setData({
+        'video_data.ispraise': 1,
+        'video_data.praisecount': that.data.video_data.praisecount+1
+      });
       app.post_request(app.getAPI('praise_video'), data, that.collectSuccess);
     }
   },
   collectSuccess: function(res){
     var that = this;
     if(res.data.code == 200){
-      if(that.data.video_data.ispraise){
-        that.setData({
-          'video_data.ispraise': 0,
-          'video_data.praisecount': that.data.video_data.praisecount-1
-        });
-      }else{
-        that.setData({
-          'video_data.ispraise': 1,
-          'video_data.praisecount': that.data.video_data.praisecount+1
-        });
-      }
-    }else{
       
+    }else{
+      wx.showToast({
+        title: '重新登陆中...',
+        icon: 'loading',
+        duration: 3000
+      });
+      app.initSession(function(){
+        wx.hideToast();
+        var data = {
+          videoid: that.data.video_data.videoid
+        }
+        if(!that.data.video_data.ispraise){
+          app.post_request(app.getAPI('cancel_praise_video'), data, function(res){
+            if(res.data.code == 200){
+              
+            }else{
+              if(that.data.video_data.ispraise){
+                that.setData({
+                  'video_data.ispraise': 0,
+                  'video_data.praisecount': that.data.video_data.praisecount-1
+                });
+              }else{
+                that.setData({
+                  'video_data.ispraise': 1,
+                  'video_data.praisecount': that.data.video_data.praisecount+1
+                });
+              }
+            }
+          });
+        }else{
+          app.post_request(app.getAPI('praise_video'), data, function(res){
+            if(res.data.code == 200){
+            
+            }else{
+              if(that.data.video_data.ispraise){
+                that.setData({
+                  'video_data.ispraise': 0,
+                  'video_data.praisecount': that.data.video_data.praisecount-1
+                });
+              }else{
+                that.setData({
+                  'video_data.ispraise': 1,
+                  'video_data.praisecount': that.data.video_data.praisecount+1
+                });
+              }
+            }
+          });
+        }
+      });
     }
   },
   sigTapHandler: function(){
