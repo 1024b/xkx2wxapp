@@ -40,7 +40,10 @@ Page({
     //初始化图片预加载组件，并指定统一的加载完成回调
     this.imgLoader = new ImgLoader(this, this.imageOnLoad.bind(this))
     this.loadImages();
-    that.data.sound_context = wx.createAudioContext("soundDetail");
+    //that.data.sound_context = wx.createAudioContext("soundDetail");
+    that.setData({
+      sound_context: wx.createAudioContext("soundDetail")
+    });
     that.animation_data = wx.createAnimation();
     that.initSoundDetail(options.musicid);
     that.initSoundVideos(options.musicid);
@@ -98,7 +101,7 @@ Page({
       limit: 20,
       musicid: that.data.sound_data.musicid
     }
-    app.post_request(app.globalData.API_LIST.TEST.sound_video_list, data, that.loadMoreSuccess);
+    app.post_request(app.getAPI('sound_video_list'), data, that.loadMoreSuccess);
   },
   loadMoreSuccess: function(res){
     var that = this;
@@ -165,7 +168,7 @@ Page({
     var data = {
       musicid: musicid
     };
-    app.post_request(app.globalData.API_LIST.TEST.sound_detail, data, that.initSoundSuccess);
+    app.post_request(app.getAPI('sound_detail'), data, that.initSoundSuccess);
   },
   initSoundSuccess: function(res){
     var that = this;
@@ -186,7 +189,7 @@ Page({
       limit: 20,
       musicid: musicid
     }
-    app.post_request(app.globalData.API_LIST.TEST.sound_video_list, data, that.initSoundVideosSuccess);
+    app.post_request(app.getAPI('sound_video_list'), data, that.initSoundVideosSuccess);
   },
   initSoundVideosSuccess: function(res){
     var that = this;

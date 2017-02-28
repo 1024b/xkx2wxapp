@@ -100,7 +100,7 @@ Page({
         first_vid: ''
       }
     }
-    app.post_request(app.globalData.API_LIST.TEST.video_list, data, that.initDataSuccess);
+    app.post_request(app.getAPI('video_list'), data, that.initDataSuccess);
   },
   initDataSuccess: function(res){
     var that = this;
@@ -137,7 +137,7 @@ Page({
       refresh: 0,
       first_vid: that.data.hots_data.first_vid
     }
-    app.post_request(app.globalData.API_LIST.TEST.video_list, data, that.loadMoreSuccess);
+    app.post_request(app.getAPI('video_list'), data, that.loadMoreSuccess);
   },
   loadMoreSuccess: function(res){
     var that = this;

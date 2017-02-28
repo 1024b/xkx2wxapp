@@ -76,7 +76,7 @@ Page({
         page: that.data.comments_data.current_page+1,
         limit: 20
       }
-      app.post_request(app.globalData.API_LIST.TEST.video_comments, data2, that.loadMoreCommentsSuccess);
+      app.post_request(app.getAPI('video_comments'), data2, that.loadMoreCommentsSuccess);
     }
   },
   loadMoreCommentsSuccess: function(res){
@@ -225,8 +225,8 @@ Page({
       page: 1,
       limit: 20
     }
-    app.post_request(app.globalData.API_LIST.TEST.video_detail, data, that.initVideoSuccess);
-    app.post_request(app.globalData.API_LIST.TEST.video_comments, data2, that.initCommentsSuccess);
+    app.post_request(app.getAPI('video_detail'), data, that.initVideoSuccess);
+    app.post_request(app.getAPI('video_comments'), data2, that.initCommentsSuccess);
   },
   initVideoSuccess: function(res){
     var that = this;
@@ -303,9 +303,9 @@ Page({
       videoid: that.data.video_data.videoid
     }
     if(that.data.video_data.ispraise){
-      app.post_request(app.globalData.API_LIST.TEST.cancel_praise_video, data, that.collectSuccess);
+      app.post_request(app.getAPI('cancel_praise_video'), data, that.collectSuccess);
     }else{
-      app.post_request(app.globalData.API_LIST.TEST.praise_video, data, that.collectSuccess);
+      app.post_request(app.getAPI('praise_video'), data, that.collectSuccess);
     }
   },
   collectSuccess: function(res){
@@ -365,7 +365,7 @@ Page({
     that.setData({
       comments_data: that.data.comments_data
     });
-    app.post_request(app.globalData.API_LIST.TEST.praise_comment, data, function(res){
+    app.post_request(app.getAPI('praise_comment'), data, function(res){
       if(res.data.code == 200){
         
       }else{
@@ -376,7 +376,7 @@ Page({
         });
         app.initSession(function(){
           wx.hideToast();
-          app.post_request(app.globalData.API_LIST.TEST.praise_comment, data, function(res){
+          app.post_request(app.getAPI('praise_comment'), data, function(res){
             if(res.data.code == 200){
               
             }else{
@@ -404,7 +404,7 @@ Page({
     that.setData({
       comments_data: that.data.comments_data
     });
-    app.post_request(app.globalData.API_LIST.TEST.praise_comment, data, function(res){
+    app.post_request(app.getAPI('praise_comment'), data, function(res){
       if(res.data.code == 200){
         
       }else{
@@ -415,7 +415,7 @@ Page({
         });
         app.initSession(function(){
           wx.hideToast();
-          app.post_request(app.globalData.API_LIST.TEST.praise_comment, data, function(res){
+          app.post_request(app.getAPI('praise_comment'), data, function(res){
             if(res.data.code == 200){
               
             }else{
