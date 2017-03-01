@@ -94,7 +94,7 @@
     background: #262630;
 }
 .sound-link{
-    max-width: 80%;
+    max-width: 70%;
     padding: 11rpx 25rpx;
     background: #383847;
     border-radius: 200rpx;
@@ -105,6 +105,10 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+.sound-title{
+    width: calc( 100% - 40rpx );
+    overflow: hidden;
 }
 .sound-link image{
     width: 37rpx;

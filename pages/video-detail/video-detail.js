@@ -321,11 +321,11 @@ Page({
     if(res.data.code == 200){
       
     }else{
-      wx.showToast({
+      /*wx.showToast({
         title: '重新登陆中...',
         icon: 'loading',
         duration: 3000
-      });
+      });*/
       app.initSession(function(){
         wx.hideToast();
         var data = {
@@ -345,11 +345,21 @@ Page({
             
             }else{
               that.resetCollectStatus();
+              wx.showModal({
+                title: '操作失败',
+                content: res.data.msg,
+                showCancel: false
+              });
             }
           });
         }
       }, function(){
         that.resetCollectStatus();
+        wx.showModal({
+          title: '未登录用户不能点赞哦',
+          content: '请重装小咖秀lite并授权',
+          showCancel: false
+        });
       }, null);
     }
   },
@@ -410,11 +420,11 @@ Page({
       if(res.data.code == 200){
         
       }else{
-        wx.showToast({
+        /*wx.showToast({
           title: '重新登陆中...',
           icon: 'loading',
           duration: 3000
-        });
+        });*/
         app.initSession(function(){
           wx.hideToast();
           app.post_request(app.getAPI('praise_comment'), data, function(res){
@@ -422,10 +432,20 @@ Page({
               
             }else{
               that.resetCommentStatus(index);
+              wx.showModal({
+                title: '操作失败',
+                content: res.data.msg,
+                showCancel: false
+              });
             }
           });
         }, function(){
           that.resetCommentStatus(index);
+          wx.showModal({
+            title: '未登录用户不能点赞哦',
+            content: '请重装小咖秀lite并授权',
+            showCancel: false
+          });
         }, null);
       }
     });
@@ -447,11 +467,11 @@ Page({
       if(res.data.code == 200){
         
       }else{
-        wx.showToast({
+        /*wx.showToast({
           title: '重新登陆中...',
           icon: 'loading',
           duration: 3000
-        });
+        });*/
         app.initSession(function(){
           wx.hideToast();
           app.post_request(app.getAPI('praise_comment'), data, function(res){
@@ -459,10 +479,20 @@ Page({
               
             }else{
               that.resetHotCommentStatus(index);
+              wx.showModal({
+                title: '操作失败',
+                content: res.data.msg,
+                showCancel: false
+              });
             }
           });
         }, function(){
           that.resetHotCommentStatus(index);
+          wx.showModal({
+            title: '未登录用户不能点赞哦',
+            content: '请重装小咖秀lite并授权',
+            showCancel: false
+          });
         }, null);
       }
     });
