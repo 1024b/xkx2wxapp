@@ -61,7 +61,7 @@ Page({
   },
   onReachBottom: function(){
     var that = this;
-    if(that.data.comments_data){
+    if(that.data.comments_data && !that.data.comments_loading){
       that.loadMoreComments();
     }
   },

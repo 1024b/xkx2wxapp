@@ -130,7 +130,9 @@ Page({
   },
   onReachBottom: function(){
     var that = this;
-    that.loadMore();
+    if(!that.data.video_loading){
+      that.loadMore();      
+    }
   },
   soundControlHandler: function(){
     var that = this;

@@ -1,7 +1,7 @@
 //index.js
 //获取应用实例
 var app = getApp()
-
+var current_page = 1;
 const ImgLoader = require('../../img-loader/img-loader.js')
 //生成一些测试数据
 function genImgListData() {
@@ -76,7 +76,9 @@ Page({
   },
   onReachBottom: function(){
     var that = this;
-    that.loadMore();
+    if(!that.data.video_loading){
+      that.loadMore(); 
+    }
   },
   onPullDownRefresh: function(){
     var that = this;
@@ -131,7 +133,7 @@ Page({
       video_loading: true
     });
     var data = {
-      page: that.data.hots_data.current_page+1,
+      page: current_page+1,
       limit: 20,
       refresh: 0,
       first_vid: that.data.hots_data.first_vid
@@ -144,9 +146,9 @@ Page({
       var tmp_arr = that.data.hots_data.list;
       tmp_arr = tmp_arr.concat(res.data.data.list);
       that.setData({
-        'hots_data.list': tmp_arr,
-        'hots_data.current_page': res.data.data.current_page
+        'hots_data.list': tmp_arr
       });
+      current_page += 1;
       //初始化图片加载列表
       for(let i=0;i<res.data.data.list.length;i++){
         that.data.img_list.push({
