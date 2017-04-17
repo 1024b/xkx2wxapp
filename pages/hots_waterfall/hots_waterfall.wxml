@@ -1,4 +1,5 @@
-<!--index.wxml-->
+<!--pages/hots_waterfall/hots_waterfall.wxml-->
+<!--这是原来的旧样式，测试用-->
 <view class="media_list" wx:if="{{ hots_data }}">
     <view class="list-col">
         <navigator wx:for="{{ hots_data.list }}" wx:if="{{ index%2 == 0 }}" class="media_item {{ index%2 == 0 ? 'media_item_left' : 'media_item_right' }}" wx:key="a" url="/pages/video-detail/video-detail?id={{ item.videoid }}&fromaudio=0">

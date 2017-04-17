@@ -1,6 +1,7 @@
 {
   "pages":[
     "pages/hots/hots",
+    "pages/hots_waterfall/hots_waterfall",
     "pages/sounds/sounds",
     "pages/sound-detail/sound-detail",
     "pages/video-detail/video-detail"

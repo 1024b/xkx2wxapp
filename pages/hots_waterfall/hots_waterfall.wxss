@@ -1,4 +1,4 @@
-/**index.wxss**/
+/* pages/hots_waterfall/hots_waterfall.wxss */
 page{
   background: #1B1B23;
 }
@@ -11,11 +11,8 @@ page{
     display: flex;
     flex-wrap: wrap;
 }
-.list-col{
-    width: 50%;
-}
 .media_item{
-  width: 100%;
+  width: 50%;
   color: #fff;
   background: #1b1b23;
   box-sizing: border-box;
@@ -28,8 +25,15 @@ page{
 }
 .img_wrap {
   width: 100%;
-  min-height: 50vw;
+  height: 0;
+  padding-bottom: 100%;
+  position: relative;
   background: #262630;
+}
+.img_wrap>image {
+  position: absolute;
+  top: 0px;
+  left: 0px;
 }
 .fade_in {
   animation: fadeIn 1s both;
