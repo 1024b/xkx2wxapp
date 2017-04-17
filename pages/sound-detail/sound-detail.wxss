@@ -26,7 +26,13 @@
 .img_wrap {
   width: 100%;
   min-height: 50vw;
+  max-height: 72vw;
+  overflow-y: hidden;
   background: #262630;
+}
+.cus-img{
+  position: relative;
+  top: -11vw;
 }
 .fade_in {
   animation: fadeIn 1s both;
