@@ -29,7 +29,7 @@ page{
 .img_wrap {
   width: 100%;
   min-height: calc( 50vw - 6rpx );
-  max-height: 72vw;
+  max-height: calc( (( 50vw + 100rpx ) * 5 / 4) - 106rpx  );
   overflow-y: hidden;
   background: #262630;
 }
