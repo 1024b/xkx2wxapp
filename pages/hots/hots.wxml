@@ -2,7 +2,7 @@
 <view class="media_list" wx:if="{{ hots_data }}">
     <view class="list-col">
         <navigator wx:for="{{ hots_data.list }}" wx:if="{{ index%2 == 0 }}" class="media_item {{ index%2 == 0 ? 'media_item_left' : 'media_item_right' }}" wx:key="a" url="/pages/video-detail/video-detail?id={{ item.videoid }}&fromaudio=0">
-            <view class="img_wrap">
+            <view class="img_wrap" style="height: {{ item.width > 0 && item.height/item.width >= 1.5 ? '' : 'calc( 50vw - 6rpx )' }}">
                 <image wx:if="{{ img_list[index].loaded }}" src="{{ img_list[index].url }}" class="fade_in {{ item.width > 0 && item.height/item.width >= 1.5 ? 'cus-img' : '' }}" mode="widthFix" />
             </view>
             <view class="media_info">
@@ -18,7 +18,7 @@
     </view>
     <view class="list-col">
         <navigator wx:for="{{ hots_data.list }}" wx:if="{{ index%2 == 1 }}" class="media_item {{ index%2 == 0 ? 'media_item_left' : 'media_item_right' }}" wx:key="a" url="/pages/video-detail/video-detail?id={{ item.videoid }}&fromaudio=0">
-            <view class="img_wrap">
+            <view class="img_wrap" style="height: {{ item.width > 0 && item.height/item.width >= 1.5 ? '' : 'calc( 50vw - 6rpx )' }}">
                 <image wx:if="{{ img_list[index].loaded }}" src="{{ img_list[index].url }}" class="fade_in {{ item.width > 0 && item.height/item.width >= 1.5 ? 'cus-img' : '' }}" mode="widthFix" />
             </view>
             <view class="media_info">

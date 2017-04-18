@@ -48,6 +48,14 @@ Page({
     that.initSoundDetail(options.musicid);
     that.initSoundVideos(options.musicid);
   },
+  onShow:function(){
+    // 页面显示
+  },
+  onHide:function(){
+    // 页面隐藏
+    var that = this;
+    that.soundControlHandler();
+  },
   onShareAppMessage: function () {
     var that = this;
     var title = that.data.sound_data.title ? that.data.sound_data.title : '小咖秀lite';

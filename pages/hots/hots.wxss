@@ -28,7 +28,7 @@ page{
 }
 .img_wrap {
   width: 100%;
-  min-height: 50vw;
+  min-height: calc( 50vw - 6rpx );
   max-height: 72vw;
   overflow-y: hidden;
   background: #262630;
