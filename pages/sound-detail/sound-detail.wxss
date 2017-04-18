@@ -26,7 +26,7 @@
 .img_wrap {
   width: 100%;
   min-height: calc( 50vw - 6rpx);
-  max-height: calc( (( 50vw + 100rpx ) * 5 / 4) - 106rpx  );
+  max-height: calc( (( 50vw + 104rpx ) * 5 / 4) - 110rpx  );
   overflow-y: hidden;
   background: #262630;
 }
